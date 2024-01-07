@@ -44,8 +44,14 @@ val bodySmall = TextStyle(
 
 val bodyMedium = TextStyle(
     fontWeight = FontWeight.Normal,
-    fontSize = 16.sp,
+    fontSize = 24.sp,
     letterSpacing = 0.25.sp
+)
+
+val labelLarge = TextStyle(
+    fontFamily = anonymousProFontFamily,
+    fontSize = 24.sp,
+    fontWeight = FontWeight.Normal
 )
 
 val labelMediumRoboto = TextStyle(

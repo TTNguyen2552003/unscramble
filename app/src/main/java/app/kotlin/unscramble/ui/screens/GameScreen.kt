@@ -4,6 +4,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,8 +17,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -37,73 +42,182 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.kotlin.unscramble.R
+import app.kotlin.unscramble.ui.theme.background
 import app.kotlin.unscramble.ui.theme.bodyMedium
 import app.kotlin.unscramble.ui.theme.bodySmall
+import app.kotlin.unscramble.ui.theme.displayLarge
+import app.kotlin.unscramble.ui.theme.error
+import app.kotlin.unscramble.ui.theme.labelLarge
 import app.kotlin.unscramble.ui.theme.labelMediumRoboto
+import app.kotlin.unscramble.ui.theme.onBackground
+import app.kotlin.unscramble.ui.theme.onPrimary
 import app.kotlin.unscramble.ui.theme.onSurface
 import app.kotlin.unscramble.ui.theme.outlineVariant
+import app.kotlin.unscramble.ui.theme.primary
 import app.kotlin.unscramble.ui.theme.primaryVariant
 import app.kotlin.unscramble.ui.theme.surface
+import app.kotlin.unscramble.ui.theme.surfaceVariant
 import app.kotlin.unscramble.ui.theme.titleMedium
-import app.kotlin.unscramble.ui.theme.error
+
 
 @Preview
 @Composable
 fun GameScreen() {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = surface)
+        modifier = Modifier.fillMaxSize()
     ) {
-        Box(
+        //Content when game start
+        Column(
             modifier = Modifier
-                .padding(
-                    top = 36.dp,
-                    end = 16.dp
-                )
-                .align(alignment = Alignment.TopEnd),
-            contentAlignment = Alignment.Center
+                .fillMaxSize()
+                .background(color = surface),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CircularProgressIndicator(
-                color = Color.Transparent,
-                strokeWidth = 3.dp,
-                trackColor = primaryVariant,
-            )
+            Box(
+                modifier = Modifier
+                    .padding(
+                        top = 36.dp,
+                        end = 16.dp
+                    )
+                    .align(alignment = Alignment.End),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    color = Color.Transparent,
+                    strokeWidth = 3.dp,
+                    trackColor = primaryVariant,
+                )
+                Text(
+                    text = "90",
+                    style = bodySmall,
+                    color = onSurface
+                )
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
             Text(
-                text = "90",
-                style = bodySmall,
+                text = "Unscramble",
+                style = titleMedium,
                 color = onSurface
             )
+
+            Spacer(modifier = Modifier.height(28.dp))
+
+            Card(
+                modifier = Modifier
+                    .height(160.dp)
+                    .width(160.dp),
+                shape = RoundedCornerShape(size = 12.dp),
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.app_background),
+                    contentDescription = "",
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+
+            Spacer(modifier = Modifier.height(28.dp))
+
+            QuizCard()
+
+            Spacer(modifier = Modifier.height(28.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = 24.dp,
+                        end = 24.dp
+                    ),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Button(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .height(60.dp)
+                        .width(132.dp),
+                    contentPadding = PaddingValues(all = 0.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = surfaceVariant
+                    ),
+                    elevation = ButtonDefaults.elevatedButtonElevation(
+                        defaultElevation = 2.dp
+                    )
+                ) {
+                    Text(
+                        text = "Skip",
+                        style = labelLarge,
+                        color = onSurface
+                    )
+                }
+
+                Button(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .height(60.dp)
+                        .width(132.dp),
+                    contentPadding = PaddingValues(all = 0.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = primary
+                    ),
+                    elevation = ButtonDefaults.elevatedButtonElevation(
+                        defaultElevation = 2.dp
+                    )
+                ) {
+                    Text(
+                        text = "Submit",
+                        style = labelLarge,
+                        color = onPrimary
+                    )
+                }
+            }
         }
+
+        //Layer with opacity before game starting
+//        Column(
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .background(
+//                    color = background.copy(alpha = 0.9f)
+//                ),
+//            verticalArrangement = Arrangement.Center,
+//            horizontalAlignment = Alignment.CenterHorizontally
+//        ){
+//            Text(
+//                text = "3",
+//                style = displayLarge,
+//                color = onBackground
+//            )
+//        }
+
+        //Layer with opacity when game is over
+//        Column(
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .background(
+//                    color = background.copy(alpha = 0.9f)
+//                ),
+//            verticalArrangement = Arrangement.Center,
+//            horizontalAlignment = Alignment.CenterHorizontally
+//        ) {
+//            Text(
+//                text = "Over",
+//                style = displayLarge,
+//                color = onBackground
+//            )
+//
+//            Spacer(modifier = Modifier.height(64.dp))
+//
+//            Text(
+//                text = "Score: 80",
+//                style = titleMedium,
+//                color = onBackground
+//            )
+//        }
     }
-
-    Spacer(modifier = Modifier.height(20.dp))
-
-    Text(
-        text = "Unscramble",
-        style = titleMedium,
-        color = onSurface
-    )
-
-    Spacer(modifier = Modifier.height(28.dp))
-
-    Card(
-        modifier = Modifier
-            .height(160.dp)
-            .width(160.dp),
-        shape = RoundedCornerShape(size = 12.dp),
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.app_background),
-            contentDescription = "",
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier.fillMaxSize()
-        )
-    }
-
-    Spacer(modifier = Modifier.height(28.dp))
-
-    QuizCard()
 }
 
 @Composable
@@ -116,14 +230,13 @@ fun QuizCard() {
                 start = 24.dp,
                 end = 24.dp
             )
+            .shadow(
+                elevation = 2.dp,
+                shape = RoundedCornerShape(12.dp)
+            )
             .background(
                 color = outlineVariant,
-                shape = RoundedCornerShape(size = 12.dp)
-            )
-            .shadow(
-                elevation = 1.dp,
-                shape = RoundedCornerShape(size = 12.dp),
-                ambientColor = Color.Black.copy(alpha = 0.3f)
+                shape = RoundedCornerShape(12.dp)
             )
     ) {
         Row(
@@ -183,9 +296,13 @@ fun QuizCard() {
                 )
                 .align(alignment = Alignment.BottomCenter),
             trailingIcon = {
-                IconButton(onClick = { currentAnswer = ""}) {
-                    Icons.Default.Clear
-                }
+                if (currentAnswer != "")
+                    IconButton(onClick = { currentAnswer = "" }) {
+                        Icon(
+                            imageVector = Icons.Default.Clear,
+                            contentDescription = ""
+                        )
+                    }
             },
             singleLine = true,
             placeholder = {
@@ -196,12 +313,18 @@ fun QuizCard() {
                 )
             },
             colors = TextFieldDefaults.colors(
-               errorIndicatorColor = error
+                focusedIndicatorColor = onSurface,
+                unfocusedIndicatorColor = onSurface,
+                focusedContainerColor = surface,
+                unfocusedContainerColor = surface,
+                errorIndicatorColor = error
             ),
             keyboardOptions = KeyboardOptions.Default.copy(
                 capitalization = KeyboardCapitalization.None,
                 keyboardType = KeyboardType.Text,
-            )
+            ),
+            textStyle = bodyMedium,
+            shape = RoundedCornerShape(8.dp)
         )
     }
 }

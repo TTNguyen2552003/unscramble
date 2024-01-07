@@ -50,6 +50,9 @@ android {
 }
 
 dependencies {
+    //ViewModel utilities for Compose
+    val lifecycle_version = "2.6.2"
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")

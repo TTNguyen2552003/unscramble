@@ -29,8 +29,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -42,8 +43,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import app.kotlin.unscramble.R
 import app.kotlin.unscramble.ui.theme.background
 import app.kotlin.unscramble.ui.theme.bodyMedium
@@ -61,18 +62,16 @@ import app.kotlin.unscramble.ui.theme.primaryVariant
 import app.kotlin.unscramble.ui.theme.surface
 import app.kotlin.unscramble.ui.theme.surfaceVariant
 import app.kotlin.unscramble.ui.theme.titleMedium
+import app.kotlin.unscramble.ui.viewmodels.GameScreenViewModel
+import app.kotlin.unscramble.ui.viewmodels.GameUiState
 import kotlinx.coroutines.delay
 
 
-@Preview
 @Composable
-fun GameScreen() {
-    var timeoutPreGame: Int by remember {
-        mutableIntStateOf(value = 3)
-    }
-    var timePlay: Int by remember {
-        mutableIntStateOf(value = 90)
-    }
+fun GameScreen(
+    gameScreenViewModel: GameScreenViewModel = viewModel()
+) {
+    val gameUiState: State<GameUiState> = gameScreenViewModel.uiState.collectAsState()
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -98,10 +97,10 @@ fun GameScreen() {
                     color = primaryVariant,
                     strokeWidth = 3.dp,
                     trackColor = Color.Transparent,
-                    progress = (timePlay.toFloat() / 90)
+                    progress = (gameUiState.value.timePlay.toFloat() / 90)
                 )
                 Text(
-                    text = timePlay.toString(),
+                    text = gameUiState.value.timePlay.toString(),
                     style = bodySmall,
                     color = onSurface
                 )
@@ -133,7 +132,14 @@ fun GameScreen() {
 
             Spacer(modifier = Modifier.height(28.dp))
 
-            QuizCard()
+            QuizCard(
+                turn = gameUiState.value.turn,
+                score = gameUiState.value.score,
+                currentQuiz = gameUiState.value.currentQuiz,
+                currentAnswer = gameUiState.value.currentAnswer,
+                isGameOver = gameUiState.value.isOver,
+                viewModel = gameScreenViewModel
+            )
 
             Spacer(modifier = Modifier.height(28.dp))
 
@@ -147,8 +153,9 @@ fun GameScreen() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                //Skip button
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { gameScreenViewModel.skip() },
                     modifier = Modifier
                         .height(60.dp)
                         .width(132.dp),
@@ -168,7 +175,7 @@ fun GameScreen() {
                 }
 
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { gameScreenViewModel.submit() },
                     modifier = Modifier
                         .height(60.dp)
                         .width(132.dp),
@@ -190,7 +197,12 @@ fun GameScreen() {
         }
 
         //Layer with opacity before game starting
-        if (timeoutPreGame > 0) {
+        if (gameUiState.value.timeoutPreGame > 0)
+            LaunchedEffect(key1 = gameUiState.value.timeoutPreGame) {
+                delay(timeMillis = 1000)
+                gameScreenViewModel.decreaseTimeoutPreGame()
+            }
+        if (gameUiState.value.timeoutPreGame > 0) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -202,32 +214,20 @@ fun GameScreen() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = timeoutPreGame.toString(),
+                    text = gameUiState.value.timeoutPreGame.toString(),
                     style = displayLarge,
                     color = onBackground
                 )
-                Button(onClick = { timeoutPreGame-- }) {
-                    Text(text = "Click here")
-                }
             }
         }
 
-        if (timeoutPreGame > 0)
-            LaunchedEffect(key1 = timeoutPreGame) {
-                delay(timeMillis = 1000)
-                timeoutPreGame--
-            }
-
-        if (timeoutPreGame == 0 && timePlay > 0)
-            LaunchedEffect(key1 = timePlay) {
-                if (timeoutPreGame == 0) {
-                    delay(timeMillis = 1000)
-                    timePlay--
-                }
-            }
-
         //Layer with opacity when game is over
-        if (timePlay == 0)
+        if (gameUiState.value.timeoutPreGame == 0 && gameUiState.value.timePlay > 0)
+            LaunchedEffect(key1 = gameUiState.value.timePlay) {
+                delay(timeMillis = 1000)
+                gameScreenViewModel.decreaseTimePlay()
+            }
+        if (gameUiState.value.isOver)
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -246,7 +246,7 @@ fun GameScreen() {
                 Spacer(modifier = Modifier.height(64.dp))
 
                 Text(
-                    text = "Score: 80",
+                    text = "Score: ${gameUiState.value.score}",
                     style = titleMedium,
                     color = onBackground
                 )
@@ -255,7 +255,14 @@ fun GameScreen() {
 }
 
 @Composable
-fun QuizCard() {
+fun QuizCard(
+    turn: Int,
+    score: Int,
+    currentQuiz: String,
+    isGameOver: Boolean,
+    currentAnswer:String,
+    viewModel: GameScreenViewModel
+) {
     Box(
         modifier = Modifier
             .height(210.dp)
@@ -285,20 +292,20 @@ fun QuizCard() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "score: 0",
+                text = "score: $score",
                 style = labelMediumRoboto,
                 color = onSurface,
             )
 
             Text(
-                text = "turn: 3",
+                text = "turn: $turn",
                 style = labelMediumRoboto,
                 color = onSurface
             )
         }
 
         Text(
-            text = "pplae",
+            text = "$currentQuiz $currentAnswer",
             style = titleMedium,
             color = onSurface,
             modifier = Modifier
@@ -320,7 +327,11 @@ fun QuizCard() {
         }
         OutlinedTextField(
             value = currentAnswer,
-            onValueChange = { currentAnswer = it },
+            onValueChange = {
+                currentAnswer = it
+                viewModel.updateCurrentAnswer(newAnswer = currentAnswer)
+            },
+            readOnly = isGameOver,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(

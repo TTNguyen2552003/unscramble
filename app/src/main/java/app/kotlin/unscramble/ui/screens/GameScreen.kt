@@ -2,6 +2,7 @@ package app.kotlin.unscramble.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,7 +28,9 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -58,11 +61,19 @@ import app.kotlin.unscramble.ui.theme.primaryVariant
 import app.kotlin.unscramble.ui.theme.surface
 import app.kotlin.unscramble.ui.theme.surfaceVariant
 import app.kotlin.unscramble.ui.theme.titleMedium
+import kotlinx.coroutines.delay
 
 
 @Preview
 @Composable
 fun GameScreen() {
+    var timeoutPreGame: Int by remember {
+        mutableIntStateOf(value = 3)
+    }
+    var timePlay: Int by remember {
+        mutableIntStateOf(value = 90)
+    }
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -73,6 +84,7 @@ fun GameScreen() {
                 .background(color = surface),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             Box(
                 modifier = Modifier
                     .padding(
@@ -83,12 +95,13 @@ fun GameScreen() {
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator(
-                    color = Color.Transparent,
+                    color = primaryVariant,
                     strokeWidth = 3.dp,
-                    trackColor = primaryVariant,
+                    trackColor = Color.Transparent,
+                    progress = (timePlay.toFloat() / 90)
                 )
                 Text(
-                    text = "90",
+                    text = timePlay.toString(),
                     style = bodySmall,
                     color = onSurface
                 )
@@ -177,46 +190,67 @@ fun GameScreen() {
         }
 
         //Layer with opacity before game starting
-//        Column(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .background(
-//                    color = background.copy(alpha = 0.9f)
-//                ),
-//            verticalArrangement = Arrangement.Center,
-//            horizontalAlignment = Alignment.CenterHorizontally
-//        ){
-//            Text(
-//                text = "3",
-//                style = displayLarge,
-//                color = onBackground
-//            )
-//        }
+        if (timeoutPreGame > 0) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        color = background.copy(alpha = 0.9f)
+                    )
+                    .clickable { },
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = timeoutPreGame.toString(),
+                    style = displayLarge,
+                    color = onBackground
+                )
+                Button(onClick = { timeoutPreGame-- }) {
+                    Text(text = "Click here")
+                }
+            }
+        }
+
+        if (timeoutPreGame > 0)
+            LaunchedEffect(key1 = timeoutPreGame) {
+                delay(timeMillis = 1000)
+                timeoutPreGame--
+            }
+
+        if (timeoutPreGame == 0 && timePlay > 0)
+            LaunchedEffect(key1 = timePlay) {
+                if (timeoutPreGame == 0) {
+                    delay(timeMillis = 1000)
+                    timePlay--
+                }
+            }
 
         //Layer with opacity when game is over
-//        Column(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .background(
-//                    color = background.copy(alpha = 0.9f)
-//                ),
-//            verticalArrangement = Arrangement.Center,
-//            horizontalAlignment = Alignment.CenterHorizontally
-//        ) {
-//            Text(
-//                text = "Over",
-//                style = displayLarge,
-//                color = onBackground
-//            )
-//
-//            Spacer(modifier = Modifier.height(64.dp))
-//
-//            Text(
-//                text = "Score: 80",
-//                style = titleMedium,
-//                color = onBackground
-//            )
-//        }
+        if (timePlay == 0)
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        color = background.copy(alpha = 0.9f)
+                    ),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Over",
+                    style = displayLarge,
+                    color = onBackground
+                )
+
+                Spacer(modifier = Modifier.height(64.dp))
+
+                Text(
+                    text = "Score: 80",
+                    style = titleMedium,
+                    color = onBackground
+                )
+            }
     }
 }
 

@@ -31,10 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -76,14 +72,14 @@ fun GameScreen(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        //Content when game start
+        //Content when game starting
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(color = surface),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
+            //Timer
             Box(
                 modifier = Modifier
                     .padding(
@@ -108,6 +104,7 @@ fun GameScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
+            //Game title
             Text(
                 text = "Unscramble",
                 style = titleMedium,
@@ -116,6 +113,7 @@ fun GameScreen(
 
             Spacer(modifier = Modifier.height(28.dp))
 
+            //Illustration
             Card(
                 modifier = Modifier
                     .height(160.dp)
@@ -132,17 +130,15 @@ fun GameScreen(
 
             Spacer(modifier = Modifier.height(28.dp))
 
+            //Quiz card
             QuizCard(
-                turn = gameUiState.value.turn,
-                score = gameUiState.value.score,
-                currentQuiz = gameUiState.value.currentQuiz,
-                currentAnswer = gameUiState.value.currentAnswer,
-                isGameOver = gameUiState.value.isOver,
-                viewModel = gameScreenViewModel
+                gameUiState = gameUiState,
+                gameViewModel = gameScreenViewModel
             )
 
             Spacer(modifier = Modifier.height(28.dp))
 
+            //The row contains some buttons of action
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -174,6 +170,7 @@ fun GameScreen(
                     )
                 }
 
+                //Submit button
                 Button(
                     onClick = { gameScreenViewModel.submit() },
                     modifier = Modifier
@@ -193,6 +190,17 @@ fun GameScreen(
                         color = onPrimary
                     )
                 }
+            }
+
+            Spacer(modifier = Modifier.height(height = 28.dp))
+
+            //Notification when user submit the answer
+            if (gameUiState.value.notificationShown){
+                Text(
+                    text = gameUiState.value.notification,
+                    style = titleMedium,
+                    color = primaryVariant
+                )
             }
         }
 
@@ -222,7 +230,10 @@ fun GameScreen(
         }
 
         //Layer with opacity when game is over
-        if (gameUiState.value.timeoutPreGame == 0 && gameUiState.value.timePlay > 0)
+        if (
+            gameUiState.value.timeoutPreGame == 0
+            && !gameUiState.value.isOver
+        )
             LaunchedEffect(key1 = gameUiState.value.timePlay) {
                 delay(timeMillis = 1000)
                 gameScreenViewModel.decreaseTimePlay()
@@ -256,12 +267,8 @@ fun GameScreen(
 
 @Composable
 fun QuizCard(
-    turn: Int,
-    score: Int,
-    currentQuiz: String,
-    isGameOver: Boolean,
-    currentAnswer:String,
-    viewModel: GameScreenViewModel
+    gameUiState: State<GameUiState>,
+    gameViewModel: GameScreenViewModel
 ) {
     Box(
         modifier = Modifier
@@ -292,20 +299,20 @@ fun QuizCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "score: $score",
+                text = "score: ${gameUiState.value.score}",
                 style = labelMediumRoboto,
                 color = onSurface,
             )
 
             Text(
-                text = "turn: $turn",
+                text = "turn: ${gameUiState.value.turn}",
                 style = labelMediumRoboto,
                 color = onSurface
             )
         }
 
         Text(
-            text = "$currentQuiz $currentAnswer",
+            text = gameUiState.value.currentQuiz,
             style = titleMedium,
             color = onSurface,
             modifier = Modifier
@@ -322,16 +329,10 @@ fun QuizCard(
                 .align(alignment = Alignment.TopCenter)
         )
 
-        var currentAnswer: String by remember {
-            mutableStateOf(value = "")
-        }
         OutlinedTextField(
-            value = currentAnswer,
-            onValueChange = {
-                currentAnswer = it
-                viewModel.updateCurrentAnswer(newAnswer = currentAnswer)
-            },
-            readOnly = isGameOver,
+            value = gameUiState.value.currentAnswer,
+            onValueChange = { gameViewModel.updateCurrentAnswer(newAnswer = it) },
+            readOnly = gameUiState.value.isOver,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
@@ -341,8 +342,12 @@ fun QuizCard(
                 )
                 .align(alignment = Alignment.BottomCenter),
             trailingIcon = {
-                if (currentAnswer != "")
-                    IconButton(onClick = { currentAnswer = "" }) {
+                if (gameUiState.value.currentAnswer != "")
+                    IconButton(
+                        onClick = {
+                            gameViewModel.updateCurrentAnswer(newAnswer = "")
+                        }
+                    ) {
                         Icon(
                             imageVector = Icons.Default.Clear,
                             contentDescription = ""

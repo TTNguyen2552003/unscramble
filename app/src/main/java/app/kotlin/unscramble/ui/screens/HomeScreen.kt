@@ -33,9 +33,8 @@ import app.kotlin.unscramble.ui.theme.primary
 @Preview
 @Composable
 fun HomeScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        //Add background image
         Image(
             painter = painterResource(id = R.drawable.app_background),
             contentDescription = "",
@@ -43,14 +42,13 @@ fun HomeScreen() {
             modifier = Modifier.fillMaxSize()
         )
 
-        //
-        Column(
+        //Add a layer with 0.8 opacity
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
                     color = background.copy(alpha = 0.8f)
-                ),
-            content = {}
+                )
         )
 
         Column(
@@ -85,7 +83,7 @@ fun HomeScreen() {
                     end = 32.dp,
                     bottom = 32.dp
                 )
-                .align(alignment =Alignment.BottomEnd)
+                .align(alignment = Alignment.BottomEnd)
         ) {
             Text(
                 text = "Exit",

@@ -1,10 +1,13 @@
 package app.kotlin.unscramble.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 data class GameUiState(
     val currentAnswer: String = "",
@@ -14,7 +17,9 @@ data class GameUiState(
     val currentWord: String = "",
     val currentQuiz: String = "",
     val isOver: Boolean = false,
-    val turn: Int = 3
+    val turn: Int = 3,
+    val notification: String = "",
+    val notificationShown: Boolean = false
 )
 
 class GameScreenViewModel : ViewModel() {
@@ -94,6 +99,22 @@ class GameScreenViewModel : ViewModel() {
         }
     }
 
+    private fun hideNotification() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                notificationShown = false
+            )
+        }
+    }
+
+    fun showNotification() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                notificationShown = true
+            )
+        }
+    }
+
     private fun isCorrectAnswer(): Boolean {
         return (_uiState.value.currentAnswer == _uiState.value.currentWord)
     }
@@ -107,6 +128,17 @@ class GameScreenViewModel : ViewModel() {
 
     fun submit() {
         if (isCorrectAnswer()) {
+            //Show notification
+            viewModelScope.launch {
+                _uiState.update { currentState ->
+                    currentState.copy(notification = "Correct!")
+                }
+                showNotification()
+                delay(timeMillis = 1000)
+                hideNotification()
+            }
+
+            updateCurrentAnswer(newAnswer = "")
             getScore(score = _uiState.value.currentWord.length)
             listOfQuizAnswered.add(_uiState.value.currentWord)
             if (isGameOver())
@@ -118,6 +150,14 @@ class GameScreenViewModel : ViewModel() {
                 }
             }
         } else {
+            viewModelScope.launch {
+                _uiState.update { currentState ->
+                    currentState.copy(notification = "Incorrect!")
+                }
+                showNotification()
+                delay(timeMillis = 1000)
+                hideNotification()
+            }
             if (_uiState.value.turn == 0)
                 skip()
             else

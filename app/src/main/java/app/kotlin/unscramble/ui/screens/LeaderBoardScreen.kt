@@ -129,7 +129,7 @@ fun LeaderBoardScreen(
                             color = onBackground
                         )
                         Text(
-                            text = "${leaderBoardScreenUiState.value.theList[i].score}}",
+                            text = "${leaderBoardScreenUiState.value.theList[i].score}",
                             style = bodySmall,
                             color = onBackground
                         )

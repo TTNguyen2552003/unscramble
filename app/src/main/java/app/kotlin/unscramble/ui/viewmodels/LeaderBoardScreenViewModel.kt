@@ -30,7 +30,10 @@ class LeaderBoardScreenViewModel : ViewModel() {
         Player(name = "Stephen", score = 8)
     )
 
-    fun updateTheList() {
+    init {
+        updateTheList()
+    }
+    private fun updateTheList() {
         _uiState.update {
             currentState->currentState.copy(
                 theList = samplePlayer

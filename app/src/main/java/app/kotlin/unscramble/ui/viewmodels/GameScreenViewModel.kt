@@ -1,7 +1,11 @@
 package app.kotlin.unscramble.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import app.kotlin.unscramble.data.Word
+import app.kotlin.unscramble.di.UnscrambleWordRepository
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +18,7 @@ data class GameUiState(
     val score: Int = 0,
     val timeoutPreGame: Int = 3,
     val timePlay: Int = 90,
-    val currentWord: String = "",
+    val currentWord: Word = Word(),
     val currentQuiz: String = "",
     val isOver: Boolean = false,
     val turn: Int = 3,
@@ -22,15 +26,18 @@ data class GameUiState(
     val notificationShown: Boolean = false
 )
 
-class GameScreenViewModel : ViewModel() {
+class GameScreenViewModel(private val repository: UnscrambleWordRepository) : ViewModel() {
     private val _uiState = MutableStateFlow(GameUiState())
     val uiState: StateFlow<GameUiState> = _uiState.asStateFlow()
 
-    private val listOfWord = setOf("apple", "hind", "boat")
+    private var listOfWord = listOf<Word>()
 
-    private val listOfQuizAnswered = mutableSetOf<String>()
+    private val listOfQuizAnswered = mutableListOf<Word>()
 
     init {
+        viewModelScope.launch(IO) {
+            listOfWord = repository.getTheListOfWord().listOfWords
+        }
         resetGame()
     }
 
@@ -50,12 +57,12 @@ class GameScreenViewModel : ViewModel() {
     }
 
     private fun updateQuiz() {
-        val unsolved: Set<String> = listOfWord - listOfQuizAnswered
-        val newWord: String = unsolved.random()
+        val unsolved: List<Word> = listOfWord - listOfQuizAnswered
+        val newWord: Word = unsolved.random()
         _uiState.update { currentState ->
             currentState.copy(
                 currentWord = newWord,
-                currentQuiz = scrambleWord(word = newWord)
+                currentQuiz = scrambleWord(word = newWord.word)
             )
         }
     }
@@ -107,7 +114,7 @@ class GameScreenViewModel : ViewModel() {
         }
     }
 
-    fun showNotification() {
+    private fun showNotification() {
         _uiState.update { currentState ->
             currentState.copy(
                 notificationShown = true
@@ -116,7 +123,7 @@ class GameScreenViewModel : ViewModel() {
     }
 
     private fun isCorrectAnswer(): Boolean {
-        return (_uiState.value.currentAnswer == _uiState.value.currentWord)
+        return (_uiState.value.currentAnswer == _uiState.value.currentWord.word)
     }
 
     fun skip() {
@@ -139,7 +146,7 @@ class GameScreenViewModel : ViewModel() {
             }
 
             updateCurrentAnswer(newAnswer = "")
-            getScore(score = _uiState.value.currentWord.length)
+            getScore(score = _uiState.value.currentWord.word.length)
             listOfQuizAnswered.add(_uiState.value.currentWord)
             if (isGameOver())
                 makeGameOver()
@@ -179,5 +186,13 @@ class GameScreenViewModel : ViewModel() {
                 turn = 3
             )
         }
+    }
+}
+
+@Suppress("UNCHECK_CAST")
+class GameScreenViewModelFactory(private val repository: UnscrambleWordRepository) :
+    ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return GameScreenViewModel(repository) as T
     }
 }

@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("plugin.serialization") version "1.9.22"
 }
 
 android {
@@ -51,8 +52,14 @@ android {
 
 dependencies {
     //ViewModel utilities for Compose
-    val lifecycle_version = "2.6.2"
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+    val lifecycleVersion = "2.6.2"
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion")
+
+    //Add Ktor Engine
+    val engineVersion = "2.3.7"
+    implementation("io.ktor:ktor-client-android:$engineVersion")
+    implementation("io.ktor:ktor-client-content-negotiation:$engineVersion")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$engineVersion")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")

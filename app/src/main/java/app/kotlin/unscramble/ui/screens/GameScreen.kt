@@ -42,6 +42,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.kotlin.unscramble.R
+import app.kotlin.unscramble.di.UnscrambleWordRepository
 import app.kotlin.unscramble.ui.theme.background
 import app.kotlin.unscramble.ui.theme.bodyMedium
 import app.kotlin.unscramble.ui.theme.bodySmall
@@ -59,13 +60,18 @@ import app.kotlin.unscramble.ui.theme.surface
 import app.kotlin.unscramble.ui.theme.surfaceVariant
 import app.kotlin.unscramble.ui.theme.titleMedium
 import app.kotlin.unscramble.ui.viewmodels.GameScreenViewModel
+import app.kotlin.unscramble.ui.viewmodels.GameScreenViewModelFactory
 import app.kotlin.unscramble.ui.viewmodels.GameUiState
 import kotlinx.coroutines.delay
 
 
 @Composable
 fun GameScreen(
-    gameScreenViewModel: GameScreenViewModel = viewModel()
+    gameScreenViewModel: GameScreenViewModel = viewModel(
+        factory = GameScreenViewModelFactory(
+            repository = UnscrambleWordRepository()
+        )
+    )
 ) {
     val gameUiState: State<GameUiState> = gameScreenViewModel.uiState.collectAsState()
 
@@ -195,7 +201,7 @@ fun GameScreen(
             Spacer(modifier = Modifier.height(height = 28.dp))
 
             //Notification when user submit the answer
-            if (gameUiState.value.notificationShown){
+            if (gameUiState.value.notificationShown) {
                 Text(
                     text = gameUiState.value.notification,
                     style = titleMedium,

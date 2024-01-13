@@ -6,7 +6,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,23 +16,31 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import app.kotlin.unscramble.R
 import app.kotlin.unscramble.ui.theme.background
 import app.kotlin.unscramble.ui.theme.bodySmall
 import app.kotlin.unscramble.ui.theme.displayMedium
 import app.kotlin.unscramble.ui.theme.displaySmall
 import app.kotlin.unscramble.ui.theme.onBackground
+import app.kotlin.unscramble.ui.viewmodels.LeaderBoardScreenViewModel
+import app.kotlin.unscramble.ui.viewmodels.TopTenPlayers
 
 @Preview
 @Composable
-fun LeaderBoardScreen() {
+fun LeaderBoardScreen(
+    leaderBoardScreenViewModel: LeaderBoardScreenViewModel = viewModel()
+) {
+    val leaderBoardScreenUiState: State<TopTenPlayers> =
+        leaderBoardScreenViewModel.uiState.collectAsState()
     Box(modifier = Modifier.fillMaxSize()) {
         //Add background image
         Image(
@@ -106,7 +113,7 @@ fun LeaderBoardScreen() {
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                for (i: Int in 0..9) {
+                for (i: Int in 0..<leaderBoardScreenUiState.value.theList.size) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -117,12 +124,12 @@ fun LeaderBoardScreen() {
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "Trump",
+                            text = leaderBoardScreenUiState.value.theList[i].name,
                             style = bodySmall,
                             color = onBackground
                         )
                         Text(
-                            text = "80",
+                            text = "${leaderBoardScreenUiState.value.theList[i].score}}",
                             style = bodySmall,
                             color = onBackground
                         )

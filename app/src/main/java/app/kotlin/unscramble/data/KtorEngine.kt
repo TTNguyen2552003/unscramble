@@ -1,17 +1,17 @@
 package app.kotlin.unscramble.data
 
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
 import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
 private const val BASE_URL =
-    "https://firebasestorage.googleapis.com/v0/b/chat-app-4db61.appspot.com/o/data.json?alt=media&token=429ee974-ac37-45ef-8288-efcca209da10"
+    "https://firebasestorage.googleapis.com/v0/b/chat-app-4db61.appspot.com/o/data.json?alt=media&token=0779d2f6-195c-4673-90a6-593bbf342cce"
 
 private val httpClient: HttpClient = HttpClient(Android) {
     install(plugin = ContentNegotiation) {
@@ -36,6 +36,6 @@ data class Word(
 )
 
 suspend fun fetchData(): ListOfWords {
-    val jsonRawString: String = httpClient.get(BASE_URL).body()
-    return Json.decodeFromString(jsonRawString)
+    val jsonRawString: String = httpClient.get(BASE_URL).bodyAsText()
+    return Json.decodeFromString<ListOfWords>(jsonRawString)
 }

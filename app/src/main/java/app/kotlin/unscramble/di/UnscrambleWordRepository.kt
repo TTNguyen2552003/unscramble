@@ -7,7 +7,7 @@ interface Repository {
     suspend fun getTheListOfWord(): ListOfWords
 }
 
-class UnscrambleWordRepository() : Repository {
+class UnscrambleWordRepository : Repository {
     override suspend fun getTheListOfWord(): ListOfWords {
         return fetchData()
     }

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import app.kotlin.unscramble.data.Word
 import app.kotlin.unscramble.di.UnscrambleWordRepository
-import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,14 +31,17 @@ class GameScreenViewModel(private val repository: UnscrambleWordRepository) : Vi
     val uiState: StateFlow<GameUiState> = _uiState.asStateFlow()
 
     private var listOfWord = listOf<Word>()
-
     private val listOfQuizAnswered = mutableListOf<Word>()
 
     init {
-        viewModelScope.launch(IO) {
+        getListOfWord()
+        resetGame()
+    }
+
+    private fun getListOfWord() {
+        viewModelScope.launch(Dispatchers.IO) {
             listOfWord = repository.getTheListOfWord().listOfWords
         }
-        resetGame()
     }
 
     private fun CharArray.covertToString(): String {
@@ -189,7 +192,7 @@ class GameScreenViewModel(private val repository: UnscrambleWordRepository) : Vi
     }
 }
 
-@Suppress("UNCHECK_CAST")
+@Suppress( "UNCHECKED_CAST")
 class GameScreenViewModelFactory(private val repository: UnscrambleWordRepository) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

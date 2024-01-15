@@ -6,6 +6,7 @@ import androidx.annotation.RequiresExtension
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import app.kotlin.unscramble.data.Player
 import app.kotlin.unscramble.data.Word
 import app.kotlin.unscramble.di.UnscrambleWordRepository
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +28,7 @@ enum class InternetState {
 data class GameUiState(
     val internetState: InternetState = InternetState.LOADING,
     val currentAnswer: String = "",
+    val userName: String = "Unknown",
     val score: Int = 0,
     val winningStreak: Int = 0,
     val timeoutPreGame: Int = 3,
@@ -50,6 +52,14 @@ class GameScreenViewModel(private val repository: UnscrambleWordRepository) : Vi
 
     init {
         initGame()
+    }
+
+    fun updateUserName(newName: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                userName = newName
+            )
+        }
     }
 
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
@@ -142,6 +152,15 @@ class GameScreenViewModel(private val repository: UnscrambleWordRepository) : Vi
     private fun makeGameOver() {
         _uiState.update { currentState ->
             currentState.copy(isOver = true)
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.record(
+                player = Player(
+                    playerName = _uiState.value.userName,
+                    score = _uiState.value.score
+                )
+            )
         }
     }
 

@@ -1,13 +1,12 @@
 package app.kotlin.unscramble.ui.screens
 
+import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,8 +35,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -83,14 +80,14 @@ import kotlin.random.Random
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Composable
 fun GameScreen(
+    context: Context,
     gameScreenViewModel: GameScreenViewModel = viewModel(
         factory = GameScreenViewModelFactory(
-            repository = UnscrambleWordRepository()
+            repository = UnscrambleWordRepository(context = context)
         )
     )
 ) {
     val gameUiState: State<GameUiState> = gameScreenViewModel.uiState.collectAsState()
-
     when (gameUiState.value.internetState) {
         InternetState.LOADING -> {
             Box(modifier = Modifier.fillMaxSize()) {

@@ -1,5 +1,6 @@
 package app.kotlin.unscramble.ui.screens
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -22,22 +23,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.kotlin.unscramble.R
+import app.kotlin.unscramble.data.Player
+import app.kotlin.unscramble.di.UnscrambleWordRepository
 import app.kotlin.unscramble.ui.theme.background
 import app.kotlin.unscramble.ui.theme.bodySmall
 import app.kotlin.unscramble.ui.theme.displayMedium
 import app.kotlin.unscramble.ui.theme.displaySmall
 import app.kotlin.unscramble.ui.theme.onBackground
 import app.kotlin.unscramble.ui.viewmodels.LeaderBoardScreenViewModel
+import app.kotlin.unscramble.ui.viewmodels.LeaderBoardScreenViewModelFactory
 import app.kotlin.unscramble.ui.viewmodels.TopTenPlayers
 
-@Preview
 @Composable
 fun LeaderBoardScreen(
-    leaderBoardScreenViewModel: LeaderBoardScreenViewModel = viewModel()
+    context: Context,
+    leaderBoardScreenViewModel: LeaderBoardScreenViewModel = viewModel(
+        factory = LeaderBoardScreenViewModelFactory(
+            repository = UnscrambleWordRepository(context = context)
+        )
+    )
 ) {
     val leaderBoardScreenUiState: State<TopTenPlayers> =
         leaderBoardScreenViewModel.uiState.collectAsState()
@@ -113,29 +120,33 @@ fun LeaderBoardScreen(
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                for (i: Int in 0..<leaderBoardScreenUiState.value.theList.size) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                start = 20.dp,
-                                end = 20.dp
-                            ),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            text = leaderBoardScreenUiState.value.theList[i].name,
-                            style = bodySmall,
-                            color = onBackground
-                        )
-                        Text(
-                            text = "${leaderBoardScreenUiState.value.theList[i].score}",
-                            style = bodySmall,
-                            color = onBackground
-                        )
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    for (i: Player in leaderBoardScreenUiState.value.theList) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    start = 20.dp,
+                                    end = 20.dp
+                                ),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = i.playerName,
+                                style = bodySmall,
+                                color = onBackground
+                            )
+                            Text(
+                                text = "${i.score}",
+                                style = bodySmall,
+                                color = onBackground
+                            )
+                        }
                     }
-                    if (i < 9)
-                        Spacer(modifier = Modifier.height(6.dp))
                 }
             }
         }

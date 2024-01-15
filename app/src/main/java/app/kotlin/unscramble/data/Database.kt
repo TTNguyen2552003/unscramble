@@ -18,7 +18,7 @@ data class Player(
 
 @Dao
 interface PlayerDao {
-    @Query("SELECT * FROM Player Player ORDER BY score LIMIT 10")
+    @Query("SELECT * FROM Player Player ORDER BY score DESC LIMIT 10")
     fun getLeaderBoardData(): List<Player>
 
     @Insert

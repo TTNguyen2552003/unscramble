@@ -1,5 +1,6 @@
 package app.kotlin.unscramble.ui.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -97,19 +99,23 @@ fun HomeScreen() {
 @Composable
 fun MenuButton(content: String, action: () -> Unit) {
     Button(
-        onClick = action,
         modifier = Modifier
-            .width(132.dp)
-            .height(64.dp),
+            .height(64.dp)
+            .width(132.dp),
+        onClick = action,
         colors = ButtonDefaults.buttonColors(
-            containerColor = primary
+            containerColor = background.copy(alpha = 0.8f)
         ),
-        contentPadding = PaddingValues(all = 0.dp)
+        border = BorderStroke(
+            color = onBackground,
+            width = 3.dp
+        ),
+        shape = RoundedCornerShape(32.dp)
     ) {
         Text(
             text = content,
-            color = onPrimary,
-            style = labelMedium
+            style = labelMedium,
+            color = onBackground
         )
     }
 }

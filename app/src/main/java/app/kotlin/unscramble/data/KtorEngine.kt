@@ -11,7 +11,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
 private const val BASE_URL =
-    "https://firebasestorage.googleapis.com/v0/b/chat-app-4db61.appspot.com/o/data.json?alt=media&token=0779d2f6-195c-4673-90a6-593bbf342cce"
+    "https://firebasestorage.googleapis.com/v0/b/chat-app-4db61.appspot.com/o/data.json?alt=media&token=8d55a584-90d9-4795-b6ab-3695fd84b9b9"
 
 private val httpClient: HttpClient = HttpClient(Android) {
     install(plugin = ContentNegotiation) {

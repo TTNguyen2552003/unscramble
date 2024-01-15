@@ -66,7 +66,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.5.0")
 
     //Set up Room
-    val roomVersion = "2.6.1"
+    val roomVersion = "2.5.0"
     implementation("androidx.room:room-runtime:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")

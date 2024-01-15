@@ -28,6 +28,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
@@ -35,6 +36,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,7 +55,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import app.kotlin.unscramble.R
 import app.kotlin.unscramble.di.UnscrambleWordRepository
 import app.kotlin.unscramble.ui.theme.background
-import app.kotlin.unscramble.ui.theme.bodyMedium
 import app.kotlin.unscramble.ui.theme.bodySmall
 import app.kotlin.unscramble.ui.theme.displayLarge
 import app.kotlin.unscramble.ui.theme.displaySmall
@@ -350,17 +354,125 @@ fun GameScreen(
                             color = primaryVariant
                         )
                     }
-
-
                 }
 
+                //Layer to maker player input his/her name
+                var isUserNameInput: Boolean by remember {
+                    mutableStateOf(value = false)
+                }
+                if (!isUserNameInput){
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Image(
+                            painter = painterResource(id = R.drawable.app_background),
+                            contentDescription = "",
+                            contentScale = ContentScale.FillHeight,
+                            modifier = Modifier.fillMaxSize()
+                        )
+
+                        //Add a layer with 0.8 opacity
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(
+                                    color = background.copy(alpha = 0.8f)
+                                )
+                        )
+
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .align(alignment = Alignment.Center),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(28.dp)
+                        ) {
+                            Text(
+                                text = "Name your user",
+                                style = labelLarge,
+                                color = onBackground
+                            )
+
+                            OutlinedTextField(
+                                value = gameUiState.value.userName,
+                                onValueChange = {
+                                    gameScreenViewModel.updateUserName(newName = it)
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(
+                                        start = 44.dp,
+                                        end = 44.dp,
+                                    ),
+                                textStyle = labelLarge,
+                                placeholder = {
+                                    Text(
+                                        text = "",
+                                        style = labelLarge,
+                                        color = onBackground
+                                    )
+                                },
+                                trailingIcon =
+                                {
+                                    if (gameUiState.value.userName != "")
+                                        IconButton(
+                                            onClick = {
+                                                gameScreenViewModel.updateUserName(newName = "")
+                                            }
+                                        ) {
+                                            Icon(
+                                                imageVector = Icons.Default.Clear,
+                                                contentDescription = "",
+                                                tint = onBackground
+                                            )
+                                        }
+                                },
+                                singleLine = true,
+                                maxLines = 1,
+                                shape = RoundedCornerShape(size = 8.dp),
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedTextColor = onBackground,
+                                    unfocusedTextColor = onBackground,
+                                    focusedContainerColor = background.copy(alpha = 0.8f),
+                                    unfocusedContainerColor = background.copy(alpha = 0.8f),
+                                    focusedBorderColor = onBackground,
+                                    unfocusedBorderColor = onBackground,
+                                    cursorColor = onBackground
+                                )
+                            )
+
+                            Button(
+                                onClick = { isUserNameInput = true },
+                                modifier = Modifier
+                                    .height(64.dp)
+                                    .width(132.dp),
+                                shape = RoundedCornerShape(size = 32.dp),
+                                border = BorderStroke(
+                                    width = 1.dp,
+                                    color = onBackground
+                                ),
+                                enabled = (gameUiState.value.userName != ""),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = background.copy(alpha = 0.8f),
+                                    disabledContainerColor = background.copy(alpha = 0.8f),
+                                    disabledContentColor = background,
+                                    contentColor = onBackground
+                                )
+                            ) {
+                                Text(
+                                    text = "Play",
+                                    style = labelLarge
+                                )
+                            }
+                        }
+                    }
+                }
+
+
                 //Layer with opacity before game starting
-                if (gameUiState.value.timeoutPreGame > 0)
+                if (gameUiState.value.timeoutPreGame > 0 && isUserNameInput) {
                     LaunchedEffect(key1 = gameUiState.value.timeoutPreGame) {
                         delay(timeMillis = 1000)
                         gameScreenViewModel.decreaseTimeoutPreGame()
                     }
-                if (gameUiState.value.timeoutPreGame > 0) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
@@ -545,7 +657,7 @@ fun QuizCard(
             placeholder = {
                 Text(
                     text = "Your answer here!",
-                    style = bodyMedium,
+                    style = labelLarge,
                     color = onSurface
                 )
             },
@@ -561,7 +673,7 @@ fun QuizCard(
                 capitalization = KeyboardCapitalization.None,
                 keyboardType = KeyboardType.Text,
             ),
-            textStyle = bodyMedium,
+            textStyle = labelLarge,
             shape = RoundedCornerShape(8.dp)
         )
     }

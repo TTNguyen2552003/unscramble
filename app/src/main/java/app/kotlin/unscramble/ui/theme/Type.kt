@@ -42,12 +42,6 @@ val bodySmall = TextStyle(
     letterSpacing = 0.25.sp
 )
 
-val bodyMedium = TextStyle(
-    fontWeight = FontWeight.Normal,
-    fontSize = 24.sp,
-    letterSpacing = 0.25.sp
-)
-
 val labelLarge = TextStyle(
     fontFamily = anonymousProFontFamily,
     fontSize = 24.sp,
@@ -65,8 +59,4 @@ val labelMedium = TextStyle(
     fontWeight = FontWeight.Normal,
     fontSize = 16.sp,
     letterSpacing = 0.15.sp
-)
-
-val labelSmall = TextStyle(
-    fontSize = 12.sp
 )

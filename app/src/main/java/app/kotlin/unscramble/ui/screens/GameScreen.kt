@@ -52,6 +52,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import app.kotlin.unscramble.R
 import app.kotlin.unscramble.di.UnscrambleWordRepository
 import app.kotlin.unscramble.ui.theme.background
@@ -89,7 +90,8 @@ fun GameScreen(
         factory = GameScreenViewModelFactory(
             repository = UnscrambleWordRepository(context = context)
         )
-    )
+    ),
+    navController: NavHostController
 ) {
     val gameUiState: State<GameUiState> = gameScreenViewModel.uiState.collectAsState()
     when (gameUiState.value.internetState) {
@@ -204,6 +206,22 @@ fun GameScreen(
                             color = onBackground
                         )
                     }
+                }
+
+                TextButton(
+                    onClick = { navController.popBackStack() },
+                    modifier = Modifier
+                        .padding(
+                            bottom = 28.dp,
+                            end = 28.dp
+                        )
+                        .align(alignment = Alignment.BottomEnd)
+                ) {
+                    Text(
+                        text = "Back",
+                        style = displaySmall,
+                        color = onBackground
+                    )
                 }
             }
         }
@@ -360,7 +378,7 @@ fun GameScreen(
                 var isUserNameInput: Boolean by remember {
                     mutableStateOf(value = false)
                 }
-                if (!isUserNameInput){
+                if (!isUserNameInput) {
                     Box(modifier = Modifier.fillMaxSize()) {
                         Image(
                             painter = painterResource(id = R.drawable.app_background),
@@ -463,9 +481,25 @@ fun GameScreen(
                                 )
                             }
                         }
+
+                        //Back button if player don't want to play anymore
+                        TextButton(
+                            onClick = { navController.popBackStack() },
+                            modifier = Modifier
+                                .padding(
+                                    bottom = 28.dp,
+                                    end = 28.dp
+                                )
+                                .align(alignment = Alignment.BottomEnd)
+                        ) {
+                            Text(
+                                text = "Back",
+                                style = displaySmall,
+                                color = onBackground
+                            )
+                        }
                     }
                 }
-
 
                 //Layer with opacity before game starting
                 if (gameUiState.value.timeoutPreGame > 0 && isUserNameInput) {
@@ -540,7 +574,13 @@ fun GameScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             //Main Menu button
-                            TextButton(onClick = { /*TODO*/ }) {
+                            TextButton(
+                                onClick = {
+                                    navController.navigate(route = "HomeScreen") {
+                                        popUpTo(id = 0)
+                                    }
+                                }
+                            ) {
                                 Text(
                                     text = "Main Menu",
                                     style = labelLarge,

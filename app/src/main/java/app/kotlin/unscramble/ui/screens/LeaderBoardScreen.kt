@@ -25,6 +25,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import app.kotlin.unscramble.R
 import app.kotlin.unscramble.data.Player
 import app.kotlin.unscramble.di.UnscrambleWordRepository
@@ -44,7 +45,8 @@ fun LeaderBoardScreen(
         factory = LeaderBoardScreenViewModelFactory(
             repository = UnscrambleWordRepository(context = context)
         )
-    )
+    ),
+    navController: NavHostController
 ) {
     val leaderBoardScreenUiState: State<TopTenPlayers> =
         leaderBoardScreenViewModel.uiState.collectAsState()
@@ -152,7 +154,7 @@ fun LeaderBoardScreen(
         }
 
         TextButton(
-            onClick = { /*TODO*/ },
+            onClick = { navController.popBackStack() },
             modifier = Modifier
                 .padding(
                     end = 28.dp,

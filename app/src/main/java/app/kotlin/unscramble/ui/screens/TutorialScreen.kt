@@ -24,8 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import app.kotlin.unscramble.R
 import app.kotlin.unscramble.ui.theme.background
 import app.kotlin.unscramble.ui.theme.bodySmall
@@ -34,9 +34,11 @@ import app.kotlin.unscramble.ui.theme.displaySmall
 import app.kotlin.unscramble.ui.theme.labelMediumRoboto
 import app.kotlin.unscramble.ui.theme.onBackground
 
-@Preview
+
 @Composable
-fun TutorialScreen() {
+fun TutorialScreen(
+    navController: NavHostController
+) {
     Box(modifier = Modifier.fillMaxSize()) {
         //Add background image
         Image(
@@ -72,7 +74,7 @@ fun TutorialScreen() {
         }
 
         TextButton(
-            onClick = { /*TODO*/ },
+            onClick = { navController.popBackStack() },
             modifier = Modifier
                 .padding(
                     end = 28.dp,
@@ -149,7 +151,8 @@ fun GameRule() {
                 content = "For each correct answer you submit, " +
                         "you earn points equal to the length of the unscrambled word.",
                 content2 = "Example: If the word is \"KOTLIN,\"" +
-                        " and you submit the correct answer, you earn 6 points."
+                        " and you submit the correct answer, you earn 6 points.",
+                content3 = "You can give bonus points if you have winning streak."
             )
         }
 

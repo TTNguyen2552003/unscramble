@@ -1,12 +1,12 @@
 package app.kotlin.unscramble.ui.screens
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,20 +21,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import app.kotlin.unscramble.MainActivity
 import app.kotlin.unscramble.R
 import app.kotlin.unscramble.ui.theme.background
 import app.kotlin.unscramble.ui.theme.displayMedium
 import app.kotlin.unscramble.ui.theme.displaySmall
 import app.kotlin.unscramble.ui.theme.labelMedium
 import app.kotlin.unscramble.ui.theme.onBackground
-import app.kotlin.unscramble.ui.theme.onPrimary
-import app.kotlin.unscramble.ui.theme.primary
+import kotlin.system.exitProcess
 
-@Preview
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavHostController) {
+
     Box(modifier = Modifier.fillMaxSize()) {
         //Add background image
         Image(
@@ -68,18 +68,32 @@ fun HomeScreen() {
             Column(
                 modifier = Modifier
                     .padding(top = 72.dp)
-                    .align(alignment = Alignment.CenterHorizontally)
+                    .align(alignment = Alignment.CenterHorizontally),
+                verticalArrangement = Arrangement.spacedBy(space = 28.dp)
             ) {
-                MenuButton(content = "Start", action = {})
-                Spacer(modifier = Modifier.height(28.dp))
-                MenuButton(content = "Top score", action = {})
-                Spacer(modifier = Modifier.height(28.dp))
-                MenuButton(content = "Tutorial", action = {})
+                MenuButton(
+                    content = "Start",
+                    action = {
+                        navController.navigate(route = "GameScreen")
+                    }
+                )
+                MenuButton(
+                    content = "Top score",
+                    action = { navController.navigate(route = "LeaderBoardScreen") }
+                )
+                MenuButton(
+                    content = "Tutorial",
+                    action = { navController.navigate(route = "TutorialScreen") }
+                )
             }
         }
 
         TextButton(
-            onClick = { /*TODO*/ },
+            onClick = {
+                val activity = MainActivity()
+                activity.finish()
+                exitProcess(status = 0)
+            },
             modifier = Modifier
                 .padding(
                     end = 32.dp,

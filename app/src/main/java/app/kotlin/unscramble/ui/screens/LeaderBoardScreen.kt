@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -73,7 +74,7 @@ fun LeaderBoardScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Top score",
+                text = stringResource(id = R.string.Top_score_button_label),
                 style = displayMedium,
                 color = onBackground
             )
@@ -109,12 +110,12 @@ fun LeaderBoardScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Name",
+                        text = stringResource(id = R.string.Name_field_label),
                         style = displaySmall,
                         color = onBackground
                     )
                     Text(
-                        text = "score",
+                        text = stringResource(id = R.string.Score_field_label),
                         style = displaySmall,
                         color = onBackground
                     )
@@ -163,7 +164,7 @@ fun LeaderBoardScreen(
                 .align(alignment = Alignment.BottomEnd),
         ) {
             Text(
-                text = "Back",
+                text = stringResource(id = R.string.back_button_label),
                 style = displaySmall,
                 color = onBackground
             )

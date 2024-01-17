@@ -1,3 +1,94 @@
 <resources>
     <string name="app_name">Unscramble</string>
+
+    <!--String resource used as button label -->
+    <string name="retry_to_connect_button_label">Retry</string>
+    <string name="back_button_label">Back</string>
+    <string name="skip_button_label">Skip</string>
+    <string name="submit_button_label">Submit></string>
+    <string name="play_button_label">Play</string>
+    <string name="back_to_main_menu_button_label">Main Menu</string>
+    <string name="try_again_button_label">Try again</string>
+    <string name="Start_button_label">Start</string>
+    <string name="Top_score_button_label">Top score</string>
+    <string name="Tutorial_button_label">Tutorial</string>
+    <string name="exit_app">Exit</string>
+
+    <!--String used as Display or notification-->
+    <string name="loading_notification">Loading</string>
+    <string name="connection_corrupted_notification">No internet</string>
+    <string name="input_name_display">Input your name</string>
+    <string name="game_over_notification">Over</string>
+    <string name="score">score</string>
+    <string name="turn">turn</string>
+    <string name="welcome_message">Welcome</string>
+    <string name="basic_game_rule">Unscramble the word using all letter</string>
+
+    <!--String used as Place holder-->
+    <string name="answer_place_holder">Your answer here</string>
+
+    <!--String used as field label-->
+    <string name="Name_field_label">Name</string>
+    <string name="Score_field_label">Score</string>
+
+    <!--String resource used in Tutorial Screen-->
+    <!--Game Rules-->
+    <string name="Game_rules_h1">Game rules</string>
+    <string name="Time_limit_h2">Time limit</string>
+    <string name="Time_limit_body">
+        You have a total of 90 seconds to play the game. The countdown begins as soon as you start.
+    </string>
+    <string name="Scoring_h2">Scoring</string>
+    <string name="Scoring_body_1">
+        For each correct answer you submit, you earn points equal to the length of the unscrambled word.
+    </string>
+    <string name="Scoring_body_2">
+        Example: If the word is "KOTLIN", and you submit the correct answer, you earn 6 points.
+    </string>
+    <string name="Scoring_body_3">
+        You could give bonus points if you have winning streak.
+    </string>
+    <string name="Turns_h2">Turns</string>
+    <string name="Turns_body_1">You have 3 turns to answer each quiz.</string>
+    <string name="Turns_body_2">
+        If you provide a correct answer within the allowed turns, you earn points, and a new quiz is presented.
+    </string>
+    <string name="Turns_body_3">
+        If you run out of turns without a correct answer, a new quiz is presented.
+    </string>
+    <string name="Skip_Option_h2">Skip Option</string>
+    <string name="Skip_Option_body">
+        For each correct answer you submit, you earn points equal to the length of the unscrambled word.
+    </string>
+
+    <!--How to play-->
+    <string name="How_to_play_h1">How to play</string>
+    <string name="Unscramble_the_Word_h2">Unscramble the Word</string>
+    <string name="Unscramble_the_Word_body_1">
+        Look at the scrambled word presented on the screen.
+    </string>
+    <string name="Unscramble_the_Word_body_2">
+        Rearrange the letters to form the correct word.
+    </string>
+    <string name="Submit_Your_Answer_h2">Submit Your Answer</string>
+    <string name="Submit_Your_Answer_body_1">
+        Type your answer in the provided text box.
+    </string>
+    <string name="Submit_Your_Answer_body_2">
+        Click the Submit button to submit your answer.
+    </string>
+    <string name="Score_Points_h2">Score Points</string>
+    <string name="Score_Points_body_1">
+        If your answer is correct, you ern points.
+    </string>
+    <string name="Score_Points_body_2">
+        The points contribute to your overall score.
+    </string>
+    <string name="Use_Turns_Wisely_h2">Use Turns Wisely</string>
+    <string name="Use_Turns_Wisely_body_1">
+        You have a limited number of turns to answer each quiz.
+    </string>
+    <string name="Use_Turns_Wisely_body_2">
+        Be strategic and consider using the "Skip" option if needed.
+    </string>
 </resources>

@@ -1,6 +1,5 @@
 package app.kotlin.unscramble.ui.screens
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import app.kotlin.unscramble.MainActivity
@@ -61,7 +61,7 @@ fun HomeScreen(navController: NavHostController) {
                 )
         ) {
             Text(
-                text = "Welcome",
+                text = stringResource(R.string.welcome_message),
                 color = onBackground,
                 style = displayMedium
             )
@@ -72,17 +72,17 @@ fun HomeScreen(navController: NavHostController) {
                 verticalArrangement = Arrangement.spacedBy(space = 28.dp)
             ) {
                 MenuButton(
-                    content = "Start",
+                    content = stringResource(id = R.string.Start_button_label),
                     action = {
                         navController.navigate(route = "GameScreen")
                     }
                 )
                 MenuButton(
-                    content = "Top score",
+                    content = stringResource(id = R.string.Top_score_button_label),
                     action = { navController.navigate(route = "LeaderBoardScreen") }
                 )
                 MenuButton(
-                    content = "Tutorial",
+                    content = stringResource(id = R.string.Tutorial_button_label),
                     action = { navController.navigate(route = "TutorialScreen") }
                 )
             }
@@ -102,7 +102,7 @@ fun HomeScreen(navController: NavHostController) {
                 .align(alignment = Alignment.BottomEnd)
         ) {
             Text(
-                text = "Exit",
+                text = stringResource(id = R.string.exit_app),
                 color = onBackground,
                 style = displaySmall
             )

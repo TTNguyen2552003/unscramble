@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import app.kotlin.unscramble.R
@@ -63,7 +64,7 @@ fun TutorialScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Tutorial",
+                text = stringResource(R.string.Tutorial),
                 style = displayMedium,
                 color = onBackground
             )
@@ -83,7 +84,7 @@ fun TutorialScreen(
                 .align(alignment = Alignment.BottomEnd)
         ) {
             Text(
-                text = "Back",
+                text = stringResource(id = R.string.back_button_label),
                 style = displaySmall,
                 color = onBackground
             )
@@ -121,7 +122,7 @@ fun GameRule() {
 
         item {
             Text(
-                text = "Game rules",
+                text = stringResource(id = R.string.Game_rules_h1),
                 style = displaySmall,
                 color = onBackground
             )
@@ -134,9 +135,8 @@ fun GameRule() {
         item {
             Section(
                 numbered = 1,
-                title = "Time Limit",
-                content = "You have a total of 90 seconds to play the game." +
-                        " The countdown begins as soon as you start."
+                title = stringResource(id = R.string.Time_limit_h2),
+                content = stringResource(id = R.string.Time_limit_body)
             )
         }
 
@@ -147,12 +147,10 @@ fun GameRule() {
         item {
             Section(
                 numbered = 2,
-                title = "Scoring",
-                content = "For each correct answer you submit, " +
-                        "you earn points equal to the length of the unscrambled word.",
-                content2 = "Example: If the word is \"KOTLIN,\"" +
-                        " and you submit the correct answer, you earn 6 points.",
-                content3 = "You can give bonus points if you have winning streak."
+                title = stringResource(id = R.string.Scoring_h2),
+                content = stringResource(id = R.string.Scoring_body_1),
+                content2 = stringResource(id = R.string.Scoring_body_2),
+                content3 = stringResource(id = R.string.Scoring_body_3)
             )
         }
 
@@ -163,12 +161,10 @@ fun GameRule() {
         item {
             Section(
                 numbered = 3,
-                title = "Turns",
-                content = "You have 3 turns to answer each quiz.",
-                content2 = "If you provide a correct answer within the allowed turns," +
-                        " you earn points, and a new quiz is presented.",
-                content3 = "If you run out of turns without a correct answer," +
-                        " a new quiz is presented."
+                title = stringResource(id = R.string.Turns_h2),
+                content = stringResource(id = R.string.Turns_body_1),
+                content2 = stringResource(id = R.string.Turns_body_2),
+                content3 = stringResource(id = R.string.Turns_body_3)
             )
         }
 
@@ -179,9 +175,8 @@ fun GameRule() {
         item {
             Section(
                 numbered = 4,
-                title = "Skip Option",
-                content = "For each correct answer you submit, " +
-                        "you earn points equal to the length of the unscrambled word.",
+                title = stringResource(id = R.string.Skip_Option_h2),
+                content = stringResource(id = R.string.Skip_Option_body)
             )
         }
 
@@ -225,7 +220,7 @@ fun HowToPlay() {
 
         item {
             Text(
-                text = "How to play",
+                text = stringResource(id = R.string.How_to_play_h1),
                 style = displaySmall,
                 color = onBackground
             )
@@ -238,9 +233,9 @@ fun HowToPlay() {
         item {
             Section(
                 numbered = 1,
-                title = "Unscramble the Word",
-                content = "Look at the scrambled word presented on the screen.",
-                content2 = "Rearrange the letters to form the correct word."
+                title = stringResource(id = R.string.Unscramble_the_Word_h2),
+                content = stringResource(id = R.string.Unscramble_the_Word_body_1),
+                content2 = stringResource(id = R.string.Unscramble_the_Word_body_2)
             )
         }
 
@@ -251,9 +246,9 @@ fun HowToPlay() {
         item {
             Section(
                 numbered = 2,
-                title = "Submit Your Answer",
-                content = "Type your answer in the provided text box.",
-                content2 = "Click the \"Submit\" button to submit your answer."
+                title = stringResource(id = R.string.Submit_Your_Answer_h2),
+                content = stringResource(id = R.string.Submit_Your_Answer_body_1),
+                content2 = stringResource(id = R.string.Submit_Your_Answer_body_2)
             )
         }
 
@@ -264,9 +259,9 @@ fun HowToPlay() {
         item {
             Section(
                 numbered = 3,
-                title = "Score Points",
-                content = "If your answer is correct, you earn points.",
-                content2 = "The points contribute to your overall score.",
+                title = stringResource(id = R.string.Score_Points_h2),
+                content = stringResource(id = R.string.Score_Points_body_1),
+                content2 = stringResource(id = R.string.Score_Points_body_2),
             )
         }
 
@@ -277,9 +272,9 @@ fun HowToPlay() {
         item {
             Section(
                 numbered = 4,
-                title = "Use Turns Wisely",
-                content = "You have a limited number of turns to answer each quiz.",
-                content2 = "Be strategic and consider using the \"Skip\" option if needed."
+                title = stringResource(id = R.string.Use_Turns_Wisely_h2),
+                content = stringResource(id = R.string.Use_Turns_Wisely_body_1),
+                content2 = stringResource(id = R.string.Use_Turns_Wisely_body_1)
             )
         }
 

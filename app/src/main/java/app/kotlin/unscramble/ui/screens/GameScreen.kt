@@ -48,6 +48,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -118,7 +119,7 @@ fun GameScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "Loading",
+                        text = stringResource(id = R.string.loading_notification),
                         style = displaySmall,
                         color = onBackground
                     )
@@ -178,7 +179,7 @@ fun GameScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "No internet",
+                        text = stringResource(id = R.string.connection_corrupted_notification),
                         style = displaySmall,
                         color = onBackground
                     )
@@ -201,7 +202,7 @@ fun GameScreen(
                         shape = RoundedCornerShape(32.dp)
                     ) {
                         Text(
-                            text = "Retry",
+                            text = stringResource(R.string.retry_to_connect_button_label),
                             style = labelMedium,
                             color = onBackground
                         )
@@ -218,7 +219,7 @@ fun GameScreen(
                         .align(alignment = Alignment.BottomEnd)
                 ) {
                     Text(
-                        text = "Back",
+                        text = stringResource(id = R.string.back_button_label),
                         style = displaySmall,
                         color = onBackground
                     )
@@ -262,7 +263,7 @@ fun GameScreen(
 
                     //Game title
                     Text(
-                        text = "Unscramble",
+                        text = stringResource(R.string.app_name),
                         style = titleMedium,
                         color = onSurface
                     )
@@ -328,7 +329,7 @@ fun GameScreen(
                                     && gameUiState.value.timeoutPreGame == 0
                         ) {
                             Text(
-                                text = "Skip",
+                                text = stringResource(R.string.skip_button_label),
                                 style = labelLarge,
                                 color = onSurface
                             )
@@ -355,7 +356,7 @@ fun GameScreen(
                                     && gameUiState.value.timeoutPreGame == 0
                         ) {
                             Text(
-                                text = "Submit",
+                                text = stringResource(R.string.submit_button_label),
                                 style = labelLarge,
                                 color = onPrimary
                             )
@@ -404,7 +405,7 @@ fun GameScreen(
                             verticalArrangement = Arrangement.spacedBy(28.dp)
                         ) {
                             Text(
-                                text = "Name your user",
+                                text = stringResource(R.string.input_name_display),
                                 style = labelLarge,
                                 color = onBackground
                             )
@@ -421,13 +422,6 @@ fun GameScreen(
                                         end = 44.dp,
                                     ),
                                 textStyle = labelLarge,
-                                placeholder = {
-                                    Text(
-                                        text = "",
-                                        style = labelLarge,
-                                        color = onBackground
-                                    )
-                                },
                                 trailingIcon =
                                 {
                                     if (gameUiState.value.userName != "")
@@ -476,7 +470,7 @@ fun GameScreen(
                                 )
                             ) {
                                 Text(
-                                    text = "Play",
+                                    text = stringResource(R.string.play_button_label),
                                     style = labelLarge
                                 )
                             }
@@ -493,7 +487,7 @@ fun GameScreen(
                                 .align(alignment = Alignment.BottomEnd)
                         ) {
                             Text(
-                                text = "Back",
+                                text = stringResource(id = R.string.back_button_label),
                                 style = displaySmall,
                                 color = onBackground
                             )
@@ -548,7 +542,7 @@ fun GameScreen(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Text(
-                                text = "Over",
+                                text = stringResource(id = R.string.game_over_notification),
                                 style = displayLarge,
                                 color = onBackground
                             )
@@ -556,7 +550,7 @@ fun GameScreen(
                             Spacer(modifier = Modifier.height(64.dp))
 
                             Text(
-                                text = "Score: ${gameUiState.value.score}",
+                                text = stringResource(R.string.score) + "${gameUiState.value.score}",
                                 style = titleMedium,
                                 color = onBackground
                             )
@@ -582,7 +576,7 @@ fun GameScreen(
                                 }
                             ) {
                                 Text(
-                                    text = "Main Menu",
+                                    text = stringResource(id = R.string.back_to_main_menu_button_label),
                                     style = labelLarge,
                                     color = onBackground
                                 )
@@ -591,7 +585,7 @@ fun GameScreen(
                             //Try again button
                             TextButton(onClick = { gameScreenViewModel.resetGame() }) {
                                 Text(
-                                    text = "Try again",
+                                    text = stringResource(R.string.try_again_button_label),
                                     style = labelLarge,
                                     color = onBackground
                                 )
@@ -638,13 +632,13 @@ fun QuizCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "score: ${gameUiState.value.score}",
+                text = stringResource(R.string.score) + "${gameUiState.value.score}",
                 style = labelMediumRoboto,
                 color = onSurface,
             )
 
             Text(
-                text = "turn: ${gameUiState.value.turn}",
+                text = stringResource(R.string.turn) + "${gameUiState.value.turn}",
                 style = labelMediumRoboto,
                 color = onSurface
             )
@@ -660,7 +654,7 @@ fun QuizCard(
         )
 
         Text(
-            text = "Unscramble the word using all letter",
+            text = stringResource(R.string.basic_game_rule),
             style = bodySmall,
             color = onSurface,
             modifier = Modifier
@@ -696,7 +690,7 @@ fun QuizCard(
             singleLine = true,
             placeholder = {
                 Text(
-                    text = "Your answer here!",
+                    text = stringResource(id = R.string.answer_place_holder),
                     style = labelLarge,
                     color = onSurface
                 )

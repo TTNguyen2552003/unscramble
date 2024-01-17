@@ -34,6 +34,7 @@ import app.kotlin.unscramble.ui.theme.background
 import app.kotlin.unscramble.ui.theme.bodySmall
 import app.kotlin.unscramble.ui.theme.displayMedium
 import app.kotlin.unscramble.ui.theme.displaySmall
+import app.kotlin.unscramble.ui.theme.fontScale
 import app.kotlin.unscramble.ui.theme.onBackground
 import app.kotlin.unscramble.ui.viewmodels.LeaderBoardScreenViewModel
 import app.kotlin.unscramble.ui.viewmodels.LeaderBoardScreenViewModelFactory
@@ -75,7 +76,7 @@ fun LeaderBoardScreen(
         ) {
             Text(
                 text = stringResource(id = R.string.Top_score),
-                style = displayMedium,
+                style = displayMedium.fontScale(),
                 color = onBackground
             )
 
@@ -111,12 +112,12 @@ fun LeaderBoardScreen(
                 ) {
                     Text(
                         text = stringResource(id = R.string.Name_field_label),
-                        style = displaySmall,
+                        style = displaySmall.fontScale(),
                         color = onBackground
                     )
                     Text(
                         text = stringResource(id = R.string.Score_field_label),
-                        style = displaySmall,
+                        style = displaySmall.fontScale(),
                         color = onBackground
                     )
                 }
@@ -140,12 +141,12 @@ fun LeaderBoardScreen(
                         ) {
                             Text(
                                 text = i.playerName,
-                                style = bodySmall,
+                                style = bodySmall.fontScale(),
                                 color = onBackground
                             )
                             Text(
                                 text = "${i.score}",
-                                style = bodySmall,
+                                style = bodySmall.fontScale(),
                                 color = onBackground
                             )
                         }
@@ -165,7 +166,7 @@ fun LeaderBoardScreen(
         ) {
             Text(
                 text = stringResource(id = R.string.back_button_label),
-                style = displaySmall,
+                style = displaySmall.fontScale(),
                 color = onBackground
             )
         }

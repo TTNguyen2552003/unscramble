@@ -32,6 +32,7 @@ import app.kotlin.unscramble.ui.theme.background
 import app.kotlin.unscramble.ui.theme.bodySmall
 import app.kotlin.unscramble.ui.theme.displayMedium
 import app.kotlin.unscramble.ui.theme.displaySmall
+import app.kotlin.unscramble.ui.theme.fontScale
 import app.kotlin.unscramble.ui.theme.labelMediumRoboto
 import app.kotlin.unscramble.ui.theme.onBackground
 
@@ -65,7 +66,7 @@ fun TutorialScreen(
         ) {
             Text(
                 text = stringResource(R.string.Tutorial),
-                style = displayMedium,
+                style = displayMedium.fontScale(),
                 color = onBackground
             )
 
@@ -85,7 +86,7 @@ fun TutorialScreen(
         ) {
             Text(
                 text = stringResource(id = R.string.back_button_label),
-                style = displaySmall,
+                style = displaySmall.fontScale(),
                 color = onBackground
             )
         }
@@ -123,7 +124,7 @@ fun GameRule() {
         item {
             Text(
                 text = stringResource(id = R.string.Game_rules_h1),
-                style = displaySmall,
+                style = displaySmall.fontScale(),
                 color = onBackground
             )
         }
@@ -221,7 +222,7 @@ fun HowToPlay() {
         item {
             Text(
                 text = stringResource(id = R.string.How_to_play_h1),
-                style = displaySmall,
+                style = displaySmall.fontScale(),
                 color = onBackground
             )
         }
@@ -303,7 +304,7 @@ fun Section(
         //Title
         Text(
             text = "${numbered}. $title",
-            style = labelMediumRoboto,
+            style = labelMediumRoboto.fontScale(),
             color = onBackground
         )
 
@@ -313,7 +314,7 @@ fun Section(
 
             Text(
                 text = "\u2022",
-                style = bodySmall,
+                style = bodySmall.fontScale(),
                 color = onBackground
             )
 
@@ -321,7 +322,7 @@ fun Section(
 
             Text(
                 text = content,
-                style = bodySmall,
+                style = bodySmall.fontScale(),
                 color = onBackground
             )
         }
@@ -332,7 +333,7 @@ fun Section(
 
                 Text(
                     text = "\u2022",
-                    style = bodySmall,
+                    style = bodySmall.fontScale(),
                     color = onBackground
                 )
 
@@ -340,7 +341,7 @@ fun Section(
 
                 Text(
                     text = content2,
-                    style = bodySmall,
+                    style = bodySmall.fontScale(),
                     color = onBackground
                 )
             }
@@ -352,7 +353,7 @@ fun Section(
 
                 Text(
                     text = "\u2022",
-                    style = bodySmall,
+                    style = bodySmall.fontScale(),
                     color = onBackground
                 )
 
@@ -360,7 +361,7 @@ fun Section(
 
                 Text(
                     text = content3,
-                    style = bodySmall,
+                    style = bodySmall.fontScale(),
                     color = onBackground
                 )
             }

@@ -28,6 +28,7 @@ import app.kotlin.unscramble.R
 import app.kotlin.unscramble.ui.theme.background
 import app.kotlin.unscramble.ui.theme.displayMedium
 import app.kotlin.unscramble.ui.theme.displaySmall
+import app.kotlin.unscramble.ui.theme.fontScale
 import app.kotlin.unscramble.ui.theme.labelMedium
 import app.kotlin.unscramble.ui.theme.onBackground
 import kotlin.system.exitProcess
@@ -63,7 +64,7 @@ fun HomeScreen(navController: NavHostController) {
             Text(
                 text = stringResource(R.string.welcome_message),
                 color = onBackground,
-                style = displayMedium
+                style = displayMedium.fontScale()
             )
             Column(
                 modifier = Modifier
@@ -104,7 +105,7 @@ fun HomeScreen(navController: NavHostController) {
             Text(
                 text = stringResource(id = R.string.exit_app),
                 color = onBackground,
-                style = displaySmall
+                style = displaySmall.fontScale()
             )
         }
     }
@@ -128,7 +129,7 @@ fun MenuButton(content: String, action: () -> Unit) {
     ) {
         Text(
             text = content,
-            style = labelMedium,
+            style = labelMedium.fontScale(),
             color = onBackground
         )
     }

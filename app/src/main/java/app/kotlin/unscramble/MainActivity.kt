@@ -32,10 +32,9 @@ class MainActivity : ComponentActivity() {
             val controller: WindowInsetsController? = window.insetsController
             controller?.systemBarsBehavior =
                 WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-            controller?.let {
-                it.hide(WindowInsets.Type.navigationBars())
-            }
+            controller?.hide(WindowInsets.Type.navigationBars())
 
+            //App content
             FinalApp(context = applicationContext)
         }
     }

@@ -1,13 +1,22 @@
 package app.kotlin.unscramble.ui.theme
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import app.kotlin.unscramble.R
 
 // Set of Material typography styles to start with
+@Composable
+fun TextStyle.fontScale(): TextStyle {
+    val fontScale: Float = LocalConfiguration.current.fontScale
+    return this.copy(fontSize = this.fontSize / fontScale)
+}
+
 val anonymousProFontFamily = FontFamily(
     Font(R.font.anonymous_pro_regular, FontWeight.Normal)
 )

@@ -74,7 +74,7 @@ fun LeaderBoardScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = stringResource(id = R.string.Top_score_button_label),
+                text = stringResource(id = R.string.Top_score),
                 style = displayMedium,
                 color = onBackground
             )

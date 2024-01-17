@@ -5,7 +5,7 @@
     <string name="retry_to_connect_button_label">Retry</string>
     <string name="back_button_label">Back</string>
     <string name="skip_button_label">Skip</string>
-    <string name="submit_button_label">Submit></string>
+    <string name="submit_button_label">Submit</string>
     <string name="play_button_label">Play</string>
     <string name="back_to_main_menu_button_label">Main Menu</string>
     <string name="try_again_button_label">Try again</string>
@@ -19,10 +19,12 @@
     <string name="connection_corrupted_notification">No internet</string>
     <string name="input_name_display">Input your name</string>
     <string name="game_over_notification">Over</string>
-    <string name="score">score</string>
-    <string name="turn">turn</string>
+    <string name="score">score:\u0020</string>
+    <string name="turn">turn:\u0020</string>
     <string name="welcome_message">Welcome</string>
     <string name="basic_game_rule">Unscramble the word using all letter</string>
+    <string name="Top_score">Top score</string>
+    <string name = "Tutorial">Tutorial</string>
 
     <!--String used as Place holder-->
     <string name="answer_place_holder">Your answer here</string>

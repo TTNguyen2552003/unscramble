@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
             val activity: Activity? = (LocalContext.current as? Activity)
             activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-            //Set immersive mode to app
+            //Set up immersive mode
             val controller: WindowInsetsController? = window.insetsController
             controller?.systemBarsBehavior =
                 WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE

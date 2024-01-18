@@ -54,9 +54,7 @@ fun TutorialScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(
-                    color = background.copy(alpha = 0.8f)
-                )
+                .background(color = background.copy(alpha = 0.8f))
         )
 
         Column(
@@ -67,7 +65,7 @@ fun TutorialScreen(
             Text(
                 text = stringResource(R.string.Tutorial),
                 style = displayMedium.fontScale(),
-                color = onBackground
+                color = onBackground,
             )
 
             GameRule()

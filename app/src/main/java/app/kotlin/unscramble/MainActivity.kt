@@ -1,7 +1,11 @@
 package app.kotlin.unscramble
 
 import android.app.Activity
+import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.media.AudioAttributes
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
@@ -10,13 +14,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresExtension
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.lifecycleScope
 import app.kotlin.unscramble.navigation.FinalApp
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import app.kotlin.unscramble.services.AudioService
 
 class MainActivity : ComponentActivity() {
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
@@ -34,6 +34,8 @@ class MainActivity : ComponentActivity() {
                 WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
             controller?.hide(WindowInsets.Type.navigationBars())
 
+            val serviceIntent = Intent(this,AudioService::class.java)
+            startForegroundService(serviceIntent)
             //App content
             FinalApp(context = applicationContext)
         }

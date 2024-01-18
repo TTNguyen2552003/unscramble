@@ -65,13 +65,13 @@ fun LeaderBoardScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(
-                    color = background.copy(alpha = 0.8f)
-                )
+                .background(color = background.copy(alpha = 0.8f))
         )
 
         Column(
-            modifier = Modifier.padding(top = 160.dp),
+            modifier = Modifier
+                .padding(bottom = 88.dp)
+                .align(alignment = Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -125,8 +125,7 @@ fun LeaderBoardScreen(
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Column(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
                     for (i: Player in leaderBoardScreenUiState.value.theList) {

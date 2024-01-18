@@ -49,17 +49,13 @@ fun HomeScreen(navController: NavHostController) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(
-                    color = background.copy(alpha = 0.8f)
-                )
+                .background(color = background.copy(alpha = 0.8f))
         )
 
         Column(
             modifier = Modifier
-                .padding(top = 160.dp)
-                .align(
-                    alignment = Alignment.TopCenter
-                )
+                .align(alignment = Alignment.Center)
+                .padding(bottom = 88.dp)
         ) {
             Text(
                 text = stringResource(R.string.welcome_message),
@@ -68,15 +64,13 @@ fun HomeScreen(navController: NavHostController) {
             )
             Column(
                 modifier = Modifier
-                    .padding(top = 72.dp)
+                    .padding(top = 52.dp)
                     .align(alignment = Alignment.CenterHorizontally),
                 verticalArrangement = Arrangement.spacedBy(space = 28.dp)
             ) {
                 MenuButton(
                     content = stringResource(id = R.string.Start_button_label),
-                    action = {
-                        navController.navigate(route = "GameScreen")
-                    }
+                    action = { navController.navigate(route = "GameScreen") }
                 )
                 MenuButton(
                     content = stringResource(id = R.string.Top_score_button_label),
@@ -97,8 +91,8 @@ fun HomeScreen(navController: NavHostController) {
             },
             modifier = Modifier
                 .padding(
-                    end = 32.dp,
-                    bottom = 32.dp
+                    end = 28.dp,
+                    bottom = 38.dp
                 )
                 .align(alignment = Alignment.BottomEnd)
         ) {
@@ -112,15 +106,16 @@ fun HomeScreen(navController: NavHostController) {
 }
 
 @Composable
-fun MenuButton(content: String, action: () -> Unit) {
+fun MenuButton(
+    content: String,
+    action: () -> Unit
+) {
     Button(
         modifier = Modifier
             .height(64.dp)
             .width(132.dp),
         onClick = action,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = background.copy(alpha = 0.8f)
-        ),
+        colors = ButtonDefaults.buttonColors(containerColor = background.copy(alpha = 0.8f)),
         border = BorderStroke(
             color = onBackground,
             width = 3.dp

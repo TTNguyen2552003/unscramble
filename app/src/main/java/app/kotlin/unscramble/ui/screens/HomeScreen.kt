@@ -35,7 +35,6 @@ import kotlin.system.exitProcess
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
-
     Box(modifier = Modifier.fillMaxSize()) {
         //Add background image
         Image(

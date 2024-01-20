@@ -1,12 +1,14 @@
 package app.kotlin.unscramble.ui.viewmodels
 
-import android.os.Build
-import androidx.annotation.RequiresExtension
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import app.kotlin.unscramble.UnscrambleApplication
 import app.kotlin.unscramble.data.Player
-import app.kotlin.unscramble.di.UnscrambleWordRepository
+import app.kotlin.unscramble.data.PlayersRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +21,7 @@ data class TopTenPlayers(
     val theList: List<Player> = emptyList()
 )
 
-class LeaderBoardScreenViewModel(private val repository: UnscrambleWordRepository) : ViewModel() {
+class LeaderBoardScreenViewModel(private val playersRepository: PlayersRepository) : ViewModel() {
     private val _uiState = MutableStateFlow(TopTenPlayers())
     val uiState: StateFlow<TopTenPlayers> = _uiState.asStateFlow()
 
@@ -31,17 +33,19 @@ class LeaderBoardScreenViewModel(private val repository: UnscrambleWordRepositor
         viewModelScope.launch(Dispatchers.IO) {
             _uiState.update { currentState ->
                 currentState.copy(
-                    theList = repository.getLeaderBoardData()
+                    theList = playersRepository.getLeaderBoardData()
                 )
             }
         }
     }
-}
 
-@Suppress("UNCHECKED_CAST")
-class LeaderBoardScreenViewModelFactory(private val repository: UnscrambleWordRepository) :
-    ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return LeaderBoardScreenViewModel(repository) as T
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val application:UnscrambleApplication =  this[APPLICATION_KEY] as UnscrambleApplication
+                val playersRepository:PlayersRepository = application.container.playersRepository
+                LeaderBoardScreenViewModel(playersRepository = playersRepository)
+            }
+        }
     }
 }

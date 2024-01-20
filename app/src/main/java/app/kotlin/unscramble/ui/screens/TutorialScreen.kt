@@ -36,11 +36,8 @@ import app.kotlin.unscramble.ui.theme.fontScale
 import app.kotlin.unscramble.ui.theme.labelMediumRoboto
 import app.kotlin.unscramble.ui.theme.onBackground
 
-
 @Composable
-fun TutorialScreen(
-    navController: NavHostController
-) {
+fun TutorialScreen(navController: NavHostController) {
     Box(modifier = Modifier.fillMaxSize()) {
         //Add background image
         Image(
@@ -115,9 +112,7 @@ fun GameRule() {
             end = 44.dp
         )
     ) {
-        item {
-            Spacer(modifier = Modifier.height(18.dp))
-        }
+        item { Spacer(modifier = Modifier.height(18.dp)) }
 
         item {
             Text(
@@ -127,9 +122,7 @@ fun GameRule() {
             )
         }
 
-        item {
-            Spacer(modifier = Modifier.height(18.dp))
-        }
+        item { Spacer(modifier = Modifier.height(18.dp)) }
 
         item {
             Section(
@@ -139,9 +132,7 @@ fun GameRule() {
             )
         }
 
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
-        }
+        item { Spacer(modifier = Modifier.height(16.dp)) }
 
         item {
             Section(
@@ -153,9 +144,7 @@ fun GameRule() {
             )
         }
 
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
-        }
+        item { Spacer(modifier = Modifier.height(16.dp)) }
 
         item {
             Section(
@@ -167,9 +156,7 @@ fun GameRule() {
             )
         }
 
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
-        }
+        item { Spacer(modifier = Modifier.height(16.dp)) }
 
         item {
             Section(
@@ -213,9 +200,7 @@ fun HowToPlay() {
             end = 44.dp
         )
     ) {
-        item {
-            Spacer(modifier = Modifier.height(18.dp))
-        }
+        item { Spacer(modifier = Modifier.height(18.dp)) }
 
         item {
             Text(
@@ -225,9 +210,7 @@ fun HowToPlay() {
             )
         }
 
-        item {
-            Spacer(modifier = Modifier.height(18.dp))
-        }
+        item { Spacer(modifier = Modifier.height(18.dp)) }
 
         item {
             Section(
@@ -238,9 +221,7 @@ fun HowToPlay() {
             )
         }
 
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
-        }
+        item { Spacer(modifier = Modifier.height(16.dp)) }
 
         item {
             Section(
@@ -251,9 +232,7 @@ fun HowToPlay() {
             )
         }
 
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
-        }
+        item { Spacer(modifier = Modifier.height(16.dp)) }
 
         item {
             Section(
@@ -264,9 +243,7 @@ fun HowToPlay() {
             )
         }
 
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
-        }
+        item { Spacer(modifier = Modifier.height(16.dp)) }
 
         item {
             Section(

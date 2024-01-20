@@ -1,6 +1,5 @@
 package app.kotlin.unscramble.ui.screens
 
-import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresExtension
 import androidx.compose.foundation.BorderStroke
@@ -55,7 +54,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import app.kotlin.unscramble.R
-import app.kotlin.unscramble.di.UnscrambleWordRepository
 import app.kotlin.unscramble.ui.theme.background
 import app.kotlin.unscramble.ui.theme.bodySmall
 import app.kotlin.unscramble.ui.theme.displayLarge
@@ -75,7 +73,6 @@ import app.kotlin.unscramble.ui.theme.surface
 import app.kotlin.unscramble.ui.theme.surfaceVariant
 import app.kotlin.unscramble.ui.theme.titleMedium
 import app.kotlin.unscramble.ui.viewmodels.GameScreenViewModel
-import app.kotlin.unscramble.ui.viewmodels.GameScreenViewModelFactory
 import app.kotlin.unscramble.ui.viewmodels.GameUiState
 import app.kotlin.unscramble.ui.viewmodels.InternetState
 import coil.compose.AsyncImage
@@ -83,16 +80,10 @@ import coil.request.ImageRequest
 import kotlinx.coroutines.delay
 import kotlin.random.Random
 
-
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Composable
 fun GameScreen(
-    context: Context,
-    gameScreenViewModel: GameScreenViewModel = viewModel(
-        factory = GameScreenViewModelFactory(
-            repository = UnscrambleWordRepository(context = context)
-        )
-    ),
+    gameScreenViewModel: GameScreenViewModel = viewModel(factory = GameScreenViewModel.Factory),
     navController: NavHostController
 ) {
     val gameUiState: State<GameUiState> = gameScreenViewModel.uiState.collectAsState()
@@ -110,9 +101,7 @@ fun GameScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(
-                            color = background.copy(alpha = 0.8f)
-                        )
+                        .background(color = background.copy(alpha = 0.8f))
                 )
 
                 Column(
@@ -170,9 +159,7 @@ fun GameScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(
-                            color = background.copy(alpha = 0.8f)
-                        )
+                        .background(color = background.copy(alpha = 0.8f))
                 )
 
                 Column(
@@ -280,9 +267,7 @@ fun GameScreen(
                         modifier = Modifier
                             .height(160.dp)
                             .width(160.dp)
-                            .clip(
-                                shape = RoundedCornerShape(12.dp)
-                            ),
+                            .clip(shape = RoundedCornerShape(12.dp)),
                         placeholder = painterResource(id = R.drawable.image_place_holder),
                         contentDescription = "",
                         contentScale = ContentScale.FillBounds
@@ -377,9 +362,7 @@ fun GameScreen(
                 }
 
                 //Layer to maker player input his/her name
-                var isUserNameInput: Boolean by remember {
-                    mutableStateOf(value = false)
-                }
+                var isUserNameInput: Boolean by remember { mutableStateOf(value = false) }
                 if (!isUserNameInput) {
                     Box(modifier = Modifier.fillMaxSize()) {
                         Image(
@@ -393,9 +376,7 @@ fun GameScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .background(
-                                    color = background.copy(alpha = 0.8f)
-                                )
+                                .background(color = background.copy(alpha = 0.8f))
                         )
 
                         Column(
@@ -413,9 +394,7 @@ fun GameScreen(
 
                             OutlinedTextField(
                                 value = gameUiState.value.userName,
-                                onValueChange = {
-                                    gameScreenViewModel.updateUserName(newName = it)
-                                },
+                                onValueChange = { gameScreenViewModel.updateUserName(newName = it) },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(
@@ -533,9 +512,7 @@ fun GameScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(
-                                color = background.copy(alpha = 0.9f)
-                            )
+                            .background(color = background.copy(alpha = 0.9f))
                     ) {
                         Column(
                             modifier = Modifier.fillMaxSize(),
@@ -571,9 +548,7 @@ fun GameScreen(
                             //Main Menu button
                             TextButton(
                                 onClick = {
-                                    navController.navigate(route = "HomeScreen") {
-                                        popUpTo(id = 0)
-                                    }
+                                    navController.navigate(route = "HomeScreen") { popUpTo(id = 0) }
                                 }
                             ) {
                                 Text(
@@ -677,11 +652,7 @@ fun QuizCard(
                 .align(alignment = Alignment.BottomCenter),
             trailingIcon = {
                 if (gameUiState.value.currentAnswer != "")
-                    IconButton(
-                        onClick = {
-                            gameViewModel.updateCurrentAnswer(newAnswer = "")
-                        }
-                    ) {
+                    IconButton(onClick = { gameViewModel.updateCurrentAnswer(newAnswer = "") }) {
                         Icon(
                             imageVector = Icons.Default.Clear,
                             contentDescription = ""

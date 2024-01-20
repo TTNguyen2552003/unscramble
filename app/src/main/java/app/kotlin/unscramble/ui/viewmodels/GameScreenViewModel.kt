@@ -5,10 +5,15 @@ import android.os.Build
 import androidx.annotation.RequiresExtension
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import app.kotlin.unscramble.UnscrambleApplication
+import app.kotlin.unscramble.data.ListOfWordsRepository
 import app.kotlin.unscramble.data.Player
-import app.kotlin.unscramble.data.Word
-import app.kotlin.unscramble.di.UnscrambleWordRepository
+import app.kotlin.unscramble.data.PlayersRepository
+import app.kotlin.unscramble.model.Word
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,7 +47,10 @@ data class GameUiState(
 )
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
-class GameScreenViewModel(private val repository: UnscrambleWordRepository) : ViewModel() {
+class GameScreenViewModel(
+    private val listOfWordsRepository: ListOfWordsRepository,
+    private val playersRepository: PlayersRepository
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(GameUiState())
     val uiState: StateFlow<GameUiState> = _uiState.asStateFlow()
@@ -71,7 +79,7 @@ class GameScreenViewModel(private val repository: UnscrambleWordRepository) : Vi
                 }
 
                 withContext(Dispatchers.IO) {
-                    listOfWords = repository.getTheListOfWord().listOfWords
+                    listOfWords = listOfWordsRepository.getTheListOfWords().listOfWords
                 }
 
                 updateQuiz()
@@ -148,14 +156,13 @@ class GameScreenViewModel(private val repository: UnscrambleWordRepository) : Vi
         }
     }
 
-
     private fun makeGameOver() {
         _uiState.update { currentState ->
             currentState.copy(isOver = true)
         }
 
         viewModelScope.launch(Dispatchers.IO) {
-            repository.record(
+            playersRepository.record(
                 player = Player(
                     playerName = _uiState.value.userName,
                     score = _uiState.value.score
@@ -229,9 +236,9 @@ class GameScreenViewModel(private val repository: UnscrambleWordRepository) : Vi
             getScore(score = _uiState.value.currentWord.word.length + _uiState.value.winningStreak / 3)
 
             listOfWordsAnswered.add(_uiState.value.currentWord)
-            if (listOfWords.size == listOfWordsAnswered.size)
+            if (listOfWords.size == listOfWordsAnswered.size) {
                 makeGameOver()
-            else {
+            } else {
                 updateQuiz()
                 _uiState.update { currentState ->
                     currentState.copy(turn = 3)
@@ -272,13 +279,20 @@ class GameScreenViewModel(private val repository: UnscrambleWordRepository) : Vi
             )
         }
     }
-}
 
-@Suppress("UNCHECKED_CAST")
-class GameScreenViewModelFactory(private val repository: UnscrambleWordRepository) :
-    ViewModelProvider.Factory {
-    @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return GameScreenViewModel(repository) as T
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val application: UnscrambleApplication =
+                    (this[APPLICATION_KEY] as UnscrambleApplication)
+                val listOfWordsRepository: ListOfWordsRepository =
+                    application.container.listOfWordsRepository
+                val playersRepository: PlayersRepository = application.container.playersRepository
+                GameScreenViewModel(
+                    listOfWordsRepository = listOfWordsRepository,
+                    playersRepository = playersRepository
+                )
+            }
+        }
     }
 }

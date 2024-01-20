@@ -1,6 +1,5 @@
-package app.kotlin.unscramble.navigation
+package app.kotlin.unscramble
 
-import android.content.Context
 import android.os.Build
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresExtension
@@ -16,10 +15,8 @@ import app.kotlin.unscramble.ui.screens.TutorialScreen
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Composable
-fun FinalApp(
-    context: Context
-) {
-    BackHandler (enabled = true){}
+fun FinalApp() {
+    BackHandler(enabled = true, onBack = {})
 
     val navController: NavHostController = rememberNavController()
     NavHost(
@@ -30,16 +27,10 @@ fun FinalApp(
             HomeScreen(navController = navController)
         }
         composable(route = "GameScreen") {
-            GameScreen(
-                context = context,
-                navController = navController
-            )
+            GameScreen(navController = navController)
         }
-        composable(route = "LeaderBoardScreen",) {
-            LeaderBoardScreen(
-                context = context,
-                navController = navController
-            )
+        composable(route = "LeaderBoardScreen") {
+            LeaderBoardScreen(navController = navController)
         }
         composable(route = "TutorialScreen") {
             TutorialScreen(navController = navController)

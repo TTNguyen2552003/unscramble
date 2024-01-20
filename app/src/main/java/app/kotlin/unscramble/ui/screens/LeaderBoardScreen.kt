@@ -1,6 +1,5 @@
 package app.kotlin.unscramble.ui.screens
 
-import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -29,7 +28,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import app.kotlin.unscramble.R
 import app.kotlin.unscramble.data.Player
-import app.kotlin.unscramble.di.UnscrambleWordRepository
 import app.kotlin.unscramble.ui.theme.background
 import app.kotlin.unscramble.ui.theme.bodySmall
 import app.kotlin.unscramble.ui.theme.displayMedium
@@ -37,16 +35,12 @@ import app.kotlin.unscramble.ui.theme.displaySmall
 import app.kotlin.unscramble.ui.theme.fontScale
 import app.kotlin.unscramble.ui.theme.onBackground
 import app.kotlin.unscramble.ui.viewmodels.LeaderBoardScreenViewModel
-import app.kotlin.unscramble.ui.viewmodels.LeaderBoardScreenViewModelFactory
 import app.kotlin.unscramble.ui.viewmodels.TopTenPlayers
 
 @Composable
 fun LeaderBoardScreen(
-    context: Context,
     leaderBoardScreenViewModel: LeaderBoardScreenViewModel = viewModel(
-        factory = LeaderBoardScreenViewModelFactory(
-            repository = UnscrambleWordRepository(context = context)
-        )
+        factory = LeaderBoardScreenViewModel.Factory
     ),
     navController: NavHostController
 ) {

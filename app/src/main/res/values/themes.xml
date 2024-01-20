@@ -5,6 +5,5 @@
         <item name="android:windowSplashScreenBackground">@color/white</item>
         <item name="android:windowSplashScreenAnimatedIcon">@drawable/splash_screen_logo</item>
         <item name="android:windowSplashScreenAnimationDuration">1500</item>
-        <item name="android:statusBarColor">@color/black</item>
     </style>
 </resources>

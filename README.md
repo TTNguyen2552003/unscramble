@@ -23,7 +23,7 @@ Explore the visual design and user interface components in our Figma project:
 - Minimum API required is 31 (Android 12)
 
 ### Installation
-1. Clone the repository or [click here]() to download the APK file
+1. Clone the repository or [click here](https://drive.usercontent.google.com/download?id=1uMZMkDNC58LFYT5I3CC3OdEG4nKr5KZP&export=download&authuser=0&confirm=t&uuid=24b5a36c-0882-4b23-aa30-8d3e55e0602d&at=APZUnTW_grD9kwI20WhOhAOO89pb:1705825786816) to download the APK file
 ```
     https://github.com/TTNguyen25052003/Unscramble.git
 ```

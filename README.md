@@ -12,8 +12,8 @@ Unscramble is a fun and challenging word game built with Kotlin for Android. Tes
 
 ## Design
 Explore the visual design and user interface components in our Figma project:
-- [Figma design]()
-- [Figma prototype]()
+- [Figma design](https://www.figma.com/file/RIHOcKghQTGY5ghU58ou4P/Unscramble?type=design&node-id=132%3A62&mode=design&t=UcpKMcxKELg1q8TI-1)
+- [Figma prototype](https://www.figma.com/proto/RIHOcKghQTGY5ghU58ou4P/Unscramble?page-id=0%3A1&type=design&node-id=0-1886&viewport=503%2C246%2C0.1&t=bw0z6YDkQqDVxjyB-1&scaling=min-zoom&starting-point-node-id=0%3A1886&mode=design)
 
 
 ## Project setup

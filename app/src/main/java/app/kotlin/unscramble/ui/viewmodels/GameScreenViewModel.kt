@@ -62,14 +62,6 @@ class GameScreenViewModel(
         initGame()
     }
 
-    fun updateUserName(newName: String) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                userName = newName
-            )
-        }
-    }
-
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     fun initGame() {
         viewModelScope.launch {
@@ -79,6 +71,15 @@ class GameScreenViewModel(
                 }
 
                 withContext(Dispatchers.IO) {
+
+                    //After input player name, the current player is the latest player in db
+                    val latestPlayer: List<Player> = playersRepository.getTheLatestPlayer()
+                    _uiState.update { currentState ->
+                        currentState.copy(
+                            userName = latestPlayer[0].playerName
+                        )
+                    }
+
                     listOfWords = listOfWordsRepository.getTheListOfWords().listOfWords
                 }
 

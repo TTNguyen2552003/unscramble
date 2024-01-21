@@ -6,12 +6,11 @@ import android.media.MediaPlayer
 import android.media.session.PlaybackState.ACTION_PLAY
 import android.os.IBinder
 import app.kotlin.unscramble.R
-import org.jetbrains.annotations.Nullable
+
 
 class AudioService : Service(), MediaPlayer.OnPreparedListener {
     private var audioPlayer: MediaPlayer? = null
 
-    @Nullable
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }

@@ -6,6 +6,8 @@ import androidx.room.Room
 interface PlayersRepository {
     fun record(player: Player)
     fun getLeaderBoardData(): List<Player>
+
+    fun getTheLatestPlayer(): List<Player>
 }
 
 class LocalPlayersRepository(context: Context) : PlayersRepository {
@@ -23,5 +25,10 @@ class LocalPlayersRepository(context: Context) : PlayersRepository {
     override fun getLeaderBoardData(): List<Player> {
         val playerDao: PlayerDao = db.playerDao()
         return playerDao.getLeaderBoardData()
+    }
+
+    override fun getTheLatestPlayer(): List<Player> {
+        val playerDao: PlayerDao = db.playerDao()
+        return playerDao.getLatestPlayer()
     }
 }

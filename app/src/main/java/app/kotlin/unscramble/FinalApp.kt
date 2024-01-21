@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import app.kotlin.unscramble.ui.screens.GameScreen
 import app.kotlin.unscramble.ui.screens.HomeScreen
+import app.kotlin.unscramble.ui.screens.InputNameScreen
 import app.kotlin.unscramble.ui.screens.LeaderBoardScreen
 import app.kotlin.unscramble.ui.screens.TutorialScreen
 
@@ -25,6 +26,9 @@ fun FinalApp() {
     ) {
         composable(route = "HomeScreen") {
             HomeScreen(navController = navController)
+        }
+        composable(route = "InputNameScreen"){
+            InputNameScreen(navController = navController)
         }
         composable(route = "GameScreen") {
             GameScreen(navController = navController)

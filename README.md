@@ -37,6 +37,5 @@ The project followed the MVVM design pattern:
 - Room
 - Ktor network library
 - Jetpack Navigation
-### Apprchitecture
-### User flow
+
 ### App screenshot

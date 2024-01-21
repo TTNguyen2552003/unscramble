@@ -39,3 +39,6 @@ The project followed the MVVM design pattern:
 - Jetpack Navigation
 
 ### App screenshot
+<p align="center">
+  <img src="https://github.com/TTNguyen25052003/Unscramble/blob/master/Screenshot.gif" alt="Unscramble screen app" width="25%" height="25%">
+</p>

@@ -25,7 +25,7 @@ Explore the visual design and user interface components in our Figma project:
 ### Installation
 1. Clone the repository or [click here](https://drive.usercontent.google.com/download?id=1uMZMkDNC58LFYT5I3CC3OdEG4nKr5KZP&export=download&authuser=0&confirm=t&uuid=24b5a36c-0882-4b23-aa30-8d3e55e0602d&at=APZUnTW_grD9kwI20WhOhAOO89pb:1705825786816) to download the APK file
 ```
-    https://github.com/TTNguyen25052003/Unscramble.git
+    git clone https://github.com/TTNguyen25052003/Unscramble.git
 ```
 2. Open the project in Android Studio.
 3. Build and run the app on your Android device or emulator.
@@ -40,5 +40,6 @@ The project followed the MVVM design pattern:
 
 ### App screenshot
 <p align="center">
-  <img src="https://github.com/TTNguyen25052003/Unscramble/blob/master/Screenshot.gif" alt="Unscramble screen app" width="25%" height="25%">
+    <img src="https://github.com/TTNguyen25052003/Unscramble/blob/master/Screenshot.gif" alt="Unscramble screen app" width="25%" height="25%">
+    <img src="https://github.com/TTNguyen2552003/unscramble/blob/master/Screenshot_2.gif" alt="Unscramble screen app 2" width="25%" height="25%">
 </p>
